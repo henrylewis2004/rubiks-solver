@@ -15,29 +15,56 @@ public class Cube {
     public fun rTurn(prime: Boolean, face: Int, bottomFace: Int): Unit{ //prime refers to ' to turn left or right. | face refers to face facing user
 
         val tempFace: CharArray = charArrayOf(cubeFace[face]!![2], cubeFace[face]!![5], cubeFace[face]!![8])
-        if (face.equals(0) || face.equals(5)){
+        if (face.equals(0) || face.equals(5)){ //white face or yellow face
+
+
         }
         else{
-            cubeFace[face]!![2] = cubeFace[bottomFace]!![2]
-            cubeFace[face]!![5] = cubeFace[bottomFace]!![5]
-            cubeFace[face]!![8] = cubeFace[bottomFace]!![8]
+            val oppositeFace: Int = utilFun.booleanToInt(face + 2 > 5)
+            val oppositeBottom: Int = utilFun.booleanToInt(cubeFace[bottomFace]!![4].equals('w'))
 
-           val oppositeFace: Int = utilFun.booleanToInt(face + 2 > 5)
+            if (!prime) {
+                //front face
+                cubeFace[face]!![2] = cubeFace[bottomFace]!![2]
+                cubeFace[face]!![5] = cubeFace[bottomFace]!![5]
+                cubeFace[face]!![8] = cubeFace[bottomFace]!![8]
 
-            cubeFace[bottomFace]!![2] = cubeFace[face + 2 * (-1 * oppositeFace)]!![2]
-            cubeFace[bottomFace]!![5] = cubeFace[face + 2 * (-1 * oppositeFace)]!![5]
-            cubeFace[bottomFace]!![8] = cubeFace[face + 2 * (-1 * oppositeFace)]!![8]
+                //bottom face
+                cubeFace[bottomFace]!![2] = cubeFace[face + 2 * (-1 * oppositeFace)]!![2]
+                cubeFace[bottomFace]!![5] = cubeFace[face + 2 * (-1 * oppositeFace)]!![5]
+                cubeFace[bottomFace]!![8] = cubeFace[face + 2 * (-1 * oppositeFace)]!![8]
 
-           val oppositeBottom: Int = utilFun.booleanToInt(cubeFace[bottomFace]!![4].equals('w'))
+                //back face
+                cubeFace[face + 2 * (-1 * oppositeFace)]!![2] = cubeFace[oppositeBottom * 5]!![2]
+                cubeFace[face + 2 * (-1 * oppositeFace)]!![5] = cubeFace[oppositeBottom * 5]!![5]
+                cubeFace[face + 2 * (-1 * oppositeFace)]!![8] = cubeFace[oppositeBottom * 5]!![8]
 
-            cubeFace[face + 2 * (-1 * oppositeFace)]!![2] = cubeFace[oppositeBottom * 5]!![2]
-            cubeFace[face + 2 * (-1 * oppositeFace)]!![5] = cubeFace[oppositeBottom * 5]!![5]
-            cubeFace[face + 2 * (-1 * oppositeFace)]!![8] = cubeFace[oppositeBottom * 5]!![8]
+                //top face
+                cubeFace[oppositeBottom * 5]!![2] = tempFace[0]
+                cubeFace[oppositeBottom * 5]!![5] = tempFace[1]
+                cubeFace[oppositeBottom * 5]!![8] = tempFace[2]
+            }
+            else{
+                //front face
+                cubeFace[face]!![2] = cubeFace[oppositeBottom * 5]!![2]
+                cubeFace[face]!![5] = cubeFace[oppositeBottom * 5]!![5]
+                cubeFace[face]!![8] = cubeFace[oppositeBottom * 5]!![8]
 
-            cubeFace[oppositeBottom * 5]!![2] = tempFace[0]
-            cubeFace[oppositeBottom * 5]!![5] = tempFace[1]
-            cubeFace[oppositeBottom * 5]!![8] = tempFace[2]
+                //top face
+                cubeFace[oppositeBottom * 5]!![2] = cubeFace[face + 2 * (-1 * oppositeFace)]!![2]
+                cubeFace[oppositeBottom * 5]!![5] = cubeFace[face + 2 * (-1 * oppositeFace)]!![5]
+                cubeFace[oppositeBottom * 5]!![8] = cubeFace[face + 2 * (-1 * oppositeFace)]!![8]
 
+                //back face
+                cubeFace[face + 2 * (-1 * oppositeFace)]!![2] = cubeFace[bottomFace]!![2]
+                cubeFace[face + 2 * (-1 * oppositeFace)]!![5] = cubeFace[bottomFace]!![5]
+                cubeFace[face + 2 * (-1 * oppositeFace)]!![8] = cubeFace[bottomFace]!![8]
+
+                //bottom face
+                cubeFace[bottomFace]!![2] = tempFace[0]
+                cubeFace[bottomFace]!![5] = tempFace[1]
+                cubeFace[bottomFace]!![8] = tempFace[2]
+            }
 
         }
     }
