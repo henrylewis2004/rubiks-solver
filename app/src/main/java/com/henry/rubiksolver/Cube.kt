@@ -168,7 +168,7 @@ public class Cube {
         cubeFace[order[i]]!![rotationOrder[rotation][8]] = cubeFace[order[i+1]]!![rotationOrder[rotationSwap][8]]
         i++
 
-        //bottom face
+        //bottom or top face
         rotation = getRotation(order[i+1], order[i+2 - (2 * utilFun.booleanToInt(prime))])
 
         cubeFace[order[i]]!![rotationOrder[rotationSwap][2]] = cubeFace[order[i+1]]!![rotationOrder[rotation][0]]
@@ -184,7 +184,7 @@ public class Cube {
         cubeFace[order[i]]!![rotationOrder[rotation][6]] = cubeFace[order[i+1]]!![rotationOrder[rotationSwap][8]]
         i++
 
-        //top face
+        //top or bottom face
         cubeFace[order[i]]!![rotationOrder[rotationSwap][2]] = tempFace[0]
         cubeFace[order[i]]!![rotationOrder[rotationSwap][5]] = tempFace[1]
         cubeFace[order[i]]!![rotationOrder[rotationSwap][8]] = tempFace[2]
@@ -214,7 +214,7 @@ public class Cube {
         cubeFace[order[i]]!![rotationOrder[rotation][2]] = cubeFace[order[i+1]]!![rotationOrder[rotationSwap][2]]
         i++
 
-        //right side face
+        //side face
         rotation = getRotation(order[i+1], bottomFace)
 
         cubeFace[order[i]]!![rotationOrder[rotationSwap][0]] = cubeFace[order[i+1]]!![rotationOrder[rotation][0]]
@@ -230,7 +230,7 @@ public class Cube {
         cubeFace[order[i]]!![rotationOrder[rotation][2]] = cubeFace[order[i+1]]!![rotationOrder[rotationSwap][2]]
         i++
 
-        //left side face
+        //other side face
         cubeFace[order[i]]!![rotationOrder[rotationSwap][0]] = tempFace[0]
         cubeFace[order[i]]!![rotationOrder[rotationSwap][1]] = tempFace[1]
         cubeFace[order[i]]!![rotationOrder[rotationSwap][2]] = tempFace[2]
