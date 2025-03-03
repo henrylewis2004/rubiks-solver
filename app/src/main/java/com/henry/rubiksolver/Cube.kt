@@ -11,6 +11,16 @@ public class Cube {
 
      return arrayOf(CharArray(9){'w'}, CharArray(9) {'b'}, CharArray(9) {'r'}, CharArray(9) {'g'}, CharArray(9){'o'}, CharArray(9) {'y'})
     }
+	
+	public fun getCube(): Array<CharArray?>{
+		return cubeFace
+	}
+	
+	
+	public fun getCubeFace(face: Int): CharArray{
+		return cubeFace[face]
+	}
+	
 
     private fun getOppositeFace(face: Int): Int{ //returns the opposite face number
 
@@ -110,7 +120,7 @@ public class Cube {
 
     private fun rotateFace(prime: Boolean, face: Int): Unit{ //rotates face, prime rotates counterclockwise if true (if face facing front)
         var temp: Char = cubeFace[face]!![0]
-        if (prime) { //rotate counterclockwise
+        if (prime) { //rotate counterclockwise 
             cubeFace[face]!![0] = cubeFace[face]!![2]
             cubeFace[face]!![2] = cubeFace[face]!![8]
             cubeFace[face]!![8] = cubeFace[face]!![6]
@@ -144,103 +154,127 @@ public class Cube {
         var rotation: Int = getRotation(face, bottomFace)
 
         val tempFace: CharArray = charArrayOf(cubeFace[face]!![rotationOrder[rotation][2]], cubeFace[face]!![rotationOrder[rotation][5]], cubeFace[face]!![rotationOrder[rotation][8]])
-        //work here
-        if (!prime) {
+		
+		val order: IntArray
+      //  if (!prime) {
+			if (prime){order = [face,oppositeBottom, oppositeFace, bottomFace]}
+			else {order = [face, bottomFace, oppositeFace, oppositeBottom]}
+	  
             //front face
-            cubeFace[face]!![2] = cubeFace[bottomFace]!![2]
-            cubeFace[face]!![5] = cubeFace[bottomFace]!![5]
-            cubeFace[face]!![8] = cubeFace[bottomFace]!![8]
+			val rotationSwap: Int = getRotation(order[1], order[2 - (2 * booleanToInt(prime))])
+			
+            cubeFace[order[0]]!![rotationOrder[rotation][2]] = cubeFace[order[1]]!![rotationOrder[rotationSwap][2]]
+            cubeFace[order[0]]!![rotationOrder[rotation][5]] = cubeFace[order[1]]!![rotationOrder[rotationSwap][5]]
+            cubeFace[order[0]]!![rotationOrder[rotation][8]] = cubeFace[order[1]]!![rotationOrder[rotationSwap][8]]
 
             //bottom face
-            cubeFace[bottomFace]!![2] = cubeFace[oppositeFace]!![0]
-            cubeFace[bottomFace]!![5] = cubeFace[oppositeFace]!![3]
-            cubeFace[bottomFace]!![8] = cubeFace[oppositeFace]!![6]
+			rotation = getRotation(order[2], order[3 - (2 * booleanToInt(prime))]) 
+			
+            cubeFace[order[1]]!![rotationOrder[rotationSwap][2]] = cubeFace[order[2]]!![rotationOrder[rotation][0]] 
+            cubeFace[order[1]]!![rotationOrder[rotationSwap][5]] = cubeFace[order[2]]!![rotationOrder[rotation][3]]
+            cubeFace[order[1]]!![rotationOrder[rotationSwap][8]] = cubeFace[order[2]]!![rotationOrder[rotation][6]]
 
             //back face
-            cubeFace[oppositeFace]!![0] = cubeFace[oppositeBottom]!![2]
-            cubeFace[oppositeFace]!![3] = cubeFace[oppositeBottom]!![5]
-            cubeFace[oppositeFace]!![6] = cubeFace[oppositeBottom]!![8]
+			rotationSwap = getRotation(order[3], order[0 + (2 * booleanToInt(prime))])
+			
+            cubeFace[order[2]]!![rotationOrder[rotation][0]] = cubeFace[order[3]]!![rotationOrder[rotationSwap][2]]
+            cubeFace[order[2]]!![rotationOrder[rotation][3]] = cubeFace[order[3]]!![rotationOrder[rotationSwap][5]]
+            cubeFace[order[2]]!![rotationOrder[rotation][6]] = cubeFace[order[3]]!![rotationOrder[rotationSwap][8]]
 
-            //top face
-            cubeFace[oppositeBottom]!![2] = tempFace[0]
-            cubeFace[oppositeBottom]!![5] = tempFace[1]
-            cubeFace[oppositeBottom]!![8] = tempFace[2]
-        }
+            //top face	
+            cubeFace[order[3]]!![rotationOrder[rotationSwap][2]] = tempFace[0]
+            cubeFace[order[3]]!![rotationOrder[rotationSwap][5]] = tempFace[1]
+            cubeFace[order[3]]!![rotationOrder[rotationSwap][8]] = tempFace[2]
+        /*}
         else{
             //front face
-            cubeFace[face]!![2] = cubeFace[oppositeBottom]!![2]
-            cubeFace[face]!![5] = cubeFace[oppositeBottom]!![5]
-            cubeFace[face]!![8] = cubeFace[oppositeBottom]!![8]
+			val rotationSwap = getRotation(oppositeBottom, face)
+			
+            cubeFace[face]!![rotationOrder[rotation][2]] = cubeFace[oppositeBottom]!![rotationOrder[rotationSwap][2]]
+            cubeFace[face]!![rotationOrder[rotation][5]] = cubeFace[oppositeBottom]!![rotationOrder[rotationSwap][5]]
+            cubeFace[face]!![rotationOrder[rotation][8]] = cubeFace[oppositeBottom]!![rotationOrder[rotationSwap][8]]
 
             //top face
-            cubeFace[oppositeBottom]!![2] = cubeFace[oppositeFace]!![2]
-            cubeFace[oppositeBottom]!![5] = cubeFace[oppositeFace]!![5]
-            cubeFace[oppositeBottom]!![8] = cubeFace[oppositeFace]!![8]
+			rotation = getRotation(oppositeFace, oppositeBottom)
+			
+            cubeFace[oppositeBottom]!![rotationOrder[rotationSwap][2]] = cubeFace[oppositeFace]!![rotationOrder[rotation][0]]
+            cubeFace[oppositeBottom]!![rotationOrder[rotationSwap][5]] = cubeFace[oppositeFace]!![rotationOrder[rotation][3]]
+            cubeFace[oppositeBottom]!![rotationOrder[rotationSwap][8]] = cubeFace[oppositeFace]!![rotationOrder[rotation][6]]
 
             //back face
-            cubeFace[oppositeFace]!![2] = cubeFace[bottomFace]!![2]
-            cubeFace[oppositeFace]!![5] = cubeFace[bottomFace]!![5]
-            cubeFace[oppositeFace]!![8] = cubeFace[bottomFace]!![8]
+			rotationSwap = getRotation(bottomFace, oppositeFace)
+			
+            cubeFace[oppositeFace]!![rotationOrder[rotation][0]] = cubeFace[bottomFace]!![rotationOrder[rotationSwap][2]]
+            cubeFace[oppositeFace]!![rotationOrder[rotation][3]] = cubeFace[bottomFace]!![rotationOrder[rotationSwap][5]]
+            cubeFace[oppositeFace]!![rotationOrder[rotation][6]] = cubeFace[bottomFace]!![rotationOrder[rotationSwap][8]]
 
             //bottom face
-            cubeFace[bottomFace]!![2] = tempFace[0]
-            cubeFace[bottomFace]!![5] = tempFace[1]
-            cubeFace[bottomFace]!![8] = tempFace[2]
-        }
+            cubeFace[bottomFace]!![rotationOrder[rotationSwap][2]] = tempFace[0]
+            cubeFace[bottomFace]!![rotationOrder[rotationSwap][5]] = tempFace[1]
+            cubeFace[bottomFace]!![rotationOrder[rotationSwap][8]] = tempFace[2]
+        }*/
         //rotate side piece
         rotateFace(prime, getSideFace(!prime, face, bottomFace))
 
     }
 
-    public fun lTurn(prime: Boolean, face: Int, bottomFace: Int): Unit{
-        rTurn(prime, face, getOppositeFace(bottomFace))
-    }
-
     public fun uTurn(prime: Boolean, face: Int, bottomFace: Int): Unit{
 
-        val tempFace: CharArray = charArrayOf(cubeFace[face]!![0], cubeFace[face]!![1], cubeFace[face]!![2])
         val oppositeFace: Int = getOppositeFace(face)
         val sideFace = getSideFace(true, face, bottomFace)
         val oppositeSideFace = getOppositeFace(sideFace)
+		
+		val rotation = getRotation(face, bottomFace)
+        val tempFace: CharArray = charArrayOf(cubeFace[face]!![rotationOrder[rotation][0]], cubeFace[face]!![rotationOrder[rotation][1]], cubeFace[face]!![rotationOrder[rotation][2]])
 
         if (!prime){
             //front face
-            cubeFace[face]!![0] = cubeFace[sideFace]!![0]
-            cubeFace[face]!![1] = cubeFace[sideFace]!![1]
-            cubeFace[face]!![2] = cubeFace[sideFace]!![2]
+			val rotationSwap = getRotation(sideFace, bottomFace)
+			
+            cubeFace[face]!![rotationOrder[rotation][0]] = cubeFace[sideFace]!![rotationOrder[rotationSwap][0]]
+            cubeFace[face]!![rotationOrder[rotation][1]] = cubeFace[sideFace]!![rotationOrder[rotationSwap][1]]
+            cubeFace[face]!![rotationOrder[rotation][2]] = cubeFace[sideFace]!![rotationOrder[rotationSwap][2]]
 
             //right side face
-            cubeFace[sideFace]!![0] = cubeFace[oppositeFace]!![0]
-            cubeFace[sideFace]!![1] = cubeFace[oppositeFace]!![1]
-            cubeFace[sideFace]!![2] = cubeFace[oppositeFace]!![2]
+			rotation = getRotation(oppositeFace, bottomFace)
+			
+            cubeFace[sideFace]!![rotationOrder[rotationSwap][0]] = cubeFace[oppositeFace]!![rotationOrder[rotation][0]]
+            cubeFace[sideFace]!![rotationOrder[rotationSwap][1]] = cubeFace[oppositeFace]!![rotationOrder[rotation][1]]
+            cubeFace[sideFace]!![rotationOrder[rotationSwap][2]] = cubeFace[oppositeFace]!![rotationOrder[rotation][2]]
 
             //back face
-            cubeFace[oppositeFace]!![0] = cubeFace[oppositeSideFace]!![0]
-            cubeFace[oppositeFace]!![1] = cubeFace[oppositeSideFace]!![1]
-            cubeFace[oppositeFace]!![2] = cubeFace[oppositeSideFace]!![2]
+			rotationSwap = getRotation(oppositeSideFace, bottomFace)
+			
+            cubeFace[oppositeFace]!![rotationOrder[rotation][0]] = cubeFace[oppositeSideFace]!![rotationOrder[rotationSwap][0]]
+            cubeFace[oppositeFace]!![rotationOrder[rotation][1]] = cubeFace[oppositeSideFace]!![rotationOrder[rotationSwap][1]]
+            cubeFace[oppositeFace]!![rotationOrder[rotation][2]] = cubeFace[oppositeSideFace]!![rotationOrder[rotationSwap][2]]
 
             //left side face
-            cubeFace[oppositeSideFace]!![0] = tempFace[0]
-            cubeFace[oppositeSideFace]!![1] = tempFace[1]
-            cubeFace[oppositeSideFace]!![2] = tempFace[2]
+            cubeFace[oppositeSideFace]!![rotationOrder[rotationSwap][0]] = tempFace[0]
+            cubeFace[oppositeSideFace]!![rotationOrder[rotationSwap][1]] = tempFace[1]
+            cubeFace[oppositeSideFace]!![rotationOrder[rotationSwap][2]] = tempFace[2]
 
         }
         else{
         }
+		rotateFace(prime, getOppositeFace(bottomFace))
 
     }
-
+	
+	public fun lTurn(prime: Boolean, face: Int, bottomFace: Int): Unit{
+        rTurn(prime, face, getOppositeFace(bottomFace))
+    }
+	
     public fun fTurn(prime: Boolean, face: Int): Unit{
-        rotateFace(prime, face)
-
+        rTurn(prime, getSideFace(!prime, face, bottomFace))
     }
 
-    public fun bTurn(prime: Boolean, face: Int, bottomFace: Int): Unit{
-
+    public fun bTurn(prime: Boolean, face: Int): Unit{
+		fTurn(prime, getOppositeFace(face))
     }
 
     public fun dTurn(prime: Boolean, face: Int, bottomFace: Int): Unit{
-
+		uTurn(prime, face, getOppositeFace(bottomFace))
     }
 
 
