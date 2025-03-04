@@ -31,6 +31,7 @@ public class SolverUtil {
             4 -> return 'o'
             5 -> return 'y'
         }
+        return 'e' //e for error
     }
 
 
