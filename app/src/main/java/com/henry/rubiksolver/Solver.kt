@@ -95,6 +95,7 @@ public open class Solver constructor(level: Int, frontFace: Int) {
                 }
                 break
             }
+            //add in code for opposite middles
         }
 
         var al: Array<String> = arrayOf("")
