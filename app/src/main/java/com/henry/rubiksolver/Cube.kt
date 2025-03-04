@@ -3,19 +3,24 @@ package com.henry.rubiksolver
 enum class faces {WHITE, BLUE, RED, GREEN, ORANGE, YELLOW}
 
 
-public class Cube {
+public open class Cube {
 
     private var cubeFace: Array<CharArray?> = newCubeFace() //array containing cube data in the order (w,b,r,g,o,y)
 
     private val utilFun = Util()
     private val rotationOrder: Array<IntArray> = arrayOf(intArrayOf(0,1,2,3,4,5,6,7,8), intArrayOf(6,3,0,7,4,1,8,5,2), intArrayOf(8,7,6,5,4,3,2,1,0), intArrayOf(2,5,8,1,4,7,0,3,6))
 
-    public fun newCubeFace(): Array<CharArray?>{ //sets the cube to a 'solved' state
+
+    public open fun newCubeFace(): Array<CharArray?>{ //sets the cube to a 'solved' state
      return arrayOf(CharArray(9){'w'}, CharArray(9) {'b'}, CharArray(9) {'r'}, CharArray(9) {'g'}, CharArray(9){'o'}, CharArray(9) {'y'})
     }
 
     public fun mapCubeFace(face: Int, faceInput: CharArray): Unit{
-       cubeFace[face] = faceInput
+        if (faceInput.size.equals(cubeFace[face]!!.size)) {
+            cubeFace[face] = faceInput
+        }
+        else{ println("error, different CharArray sizes when mapping cube")}
+
     }
 
 	
@@ -29,6 +34,7 @@ public class Cube {
 	}
 
     public fun getCubeFaceSquare(face: Int, square: Int): Char{
+        if (square > cubeFace[face]!!.size) { return 'e'} //e for error
         return cubeFace[face]!![square]
     }
 
@@ -37,7 +43,7 @@ public class Cube {
     }
 	
 
-    private fun getOppositeFace(face: Int): Int{ //returns the opposite face number
+    public fun getOppositeFace(face: Int): Int{ //returns the opposite face number
 
         when (face){
             faces.WHITE.ordinal -> return faces.YELLOW.ordinal
@@ -49,6 +55,10 @@ public class Cube {
         }
 
 
+    }
+
+    public fun getSquare(face: Int, bottomFace: Int, square: Int): Char{
+        return cubeFace[face]!![rotationOrder[getRotation(face, bottomFace)][square]]
     }
 
     private fun getSideFace(right: Boolean, face: Int, bottomFace: Int): Int{ //right refers to which side is wanted, if true the side to the right is returned
