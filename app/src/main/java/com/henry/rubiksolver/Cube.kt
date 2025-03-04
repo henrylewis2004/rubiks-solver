@@ -61,7 +61,7 @@ public open class Cube {
         return cubeFace[face]!![rotationOrder[getRotation(face, bottomFace)][square]]
     }
 
-    private fun getSideFace(right: Boolean, face: Int, bottomFace: Int): Int{ //right refers to which side is wanted, if true the side to the right is returned
+    public fun getSideFace(right: Boolean, face: Int, bottomFace: Int): Int{ //right refers to which side is wanted, if true the side to the right is returned
         when(face) {
             faces.WHITE.ordinal -> when (bottomFace){
                 faces.BLUE.ordinal -> return faces.ORANGE.ordinal * utilFun.booleanToInt(right) + utilFun.booleanToInt(!right) * getOppositeFace(faces.ORANGE.ordinal)

@@ -22,6 +22,17 @@ public class SolverUtil {
         return true
     }
 
+    public fun getColour(face: Int): Char{
+        when(face){
+            0 -> return 'w'
+            1 -> return 'b'
+            2 -> return 'r'
+            3 -> return 'g'
+            4 -> return 'o'
+            5 -> return 'y'
+        }
+    }
+
 
 
     public fun move(cube: Cube, prime: Boolean, action: String, face: Int, bottomFace: Int): String{
