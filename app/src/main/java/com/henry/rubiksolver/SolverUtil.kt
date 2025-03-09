@@ -15,7 +15,7 @@ public class SolverUtil {
         return true
     }
 
-    public fun solvedCube(cubeFace: Array<CharArray?>): Boolean{
+    public fun solvedCube(cubeFace: Array<CharArray>): Boolean{
         for (face in cubeFace){
             if (!isFaceSolved(face!!)){return false}
         }

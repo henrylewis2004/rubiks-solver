@@ -82,6 +82,7 @@ public open class Solver constructor(level: Int, frontFace: Int) {
             }
         }
 
+        if (solverUtil.solvedCube(cube.getCube())){ return algorithm }
 
         for (face in 1.. 4){
             if (cube.getSquare(face,0,1).equals(cube.getSquare(face,0,0))){
@@ -96,6 +97,20 @@ public open class Solver constructor(level: Int, frontFace: Int) {
                 break
             }
             //add in code for opposite middles
+            if (difficulty.equals(1) and face.equals(4)){
+                if (cube.getCubeFaceSquare(face, 1).equals(cube.getCubeFaceSquare(cube.getOppositeFace(face), 1))){
+                    val al: Array<String> = arrayOf("r","r","l","l","u","r","r","l","l","u","u","r","r","l","l","u","r","r","l","l")
+
+                    for (move in al){
+                        if (move.length > 1){algorithm += solverUtil.move(cube,true,move,frontFace,0) }
+                        else{algorithm += solverUtil.move(cube,false,move,frontFace,0) }
+                    }
+
+                    return algorithm
+
+                }
+            }
+
         }
 
         var al: Array<String> = arrayOf("")
