@@ -35,16 +35,62 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newCubeBackButton" />
 
-    <View
-        android:id="@+id/camPreviewView"
-        android:layout_width="203dp"
-        android:layout_height="300dp"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="104dp"
-        android:layout_marginBottom="216dp"
+    <Button
+        android:id="@+id/newCubeCamButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="159dp"
+        android:layout_marginBottom="155dp"
+        android:text="Picutre"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newCubeInstructionText" />
+        app:layout_constraintTop_toBottomOf="@+id/cubeFaceLayout" />
+
+    <TableLayout
+        android:id="@+id/cubeFaceLayout"
+        android:layout_width="354dp"
+        android:layout_height="293dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="46dp"
+        app:layout_constraintBottom_toTopOf="@+id/newCubeCamButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newCubeInstructionText">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="106dp">
+
+            <Button
+                android:id="@+id/cubeFaceButton0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/cubeFaceButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/cubeFaceButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+    </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

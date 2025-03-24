@@ -1,12 +1,12 @@
 package com.henry.rubiksolver.Activities
 
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TableLayout
+import android.widget.TableRow
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
-import androidx.camera.view.LifecycleCameraController
-import androidx.camera.view.PreviewView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.henry.rubiksolver.R
@@ -22,11 +22,16 @@ class NewCubeActivity : AppCompatActivity() {
             insets
         }
 
-        val previewView: PreviewView = findViewById(R.id.camPreviewView)
-        var cameraController = LifecycleCameraController(baseContext)
-        cameraController.bindToLifecycle(this)
-        cameraController.cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-        previewView.controller = cameraController
+        val colourList: CharArray = charArrayOf('w','b','r','g','o','y')
+
+        for(i in 0..2 ){
+            for (j in 0..2){
+                val button: Button = (findViewById<TableLayout>(R.id.cubeFaceLayout).getChildAt(i) as TableRow).getChildAt(j) as Button
+                button.setOnClickListener{
+                    button.setBackgroundColor(Color.parseColor("#ffffff"))
+                }
+            }
+        }
 
         findViewById<Button>(R.id.newCubeBackButton).setOnClickListener{
             finish()
