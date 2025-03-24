@@ -1,10 +1,13 @@
-package com.henry.rubiksolver
+package com.henry.rubiksolver.Activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.henry.rubiksolver.Cube
+import com.henry.rubiksolver.R
 import com.henry.rubiksolver.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,22 +20,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        findViewById<Button>(R.id.newCubeButton).setOnClickListener {
-            cube.newCubeFace(9)
-            val s: String = getCubeFaceString(cube)
-            findViewById<TextView>(R.id.cubeText).text = s
-        }
-        findViewById<Button>(R.id.rTurn).setOnClickListener {
-            cube.rTurn(false,0,1)
-            val s: String = getCubeFaceString(cube)
-            findViewById<TextView>(R.id.cubeText).text = s
+        findViewById<Button>(R.id.newCubeButton).setOnClickListener { //goto make new camera activity
+            val newCubeIntent = Intent(this, NewCubeActivity::class.java)
+            startActivity(newCubeIntent)
         }
 
+        findViewById<Button>(R.id.settingsButton).setOnClickListener { //goto settings
+            val settingsIntent = Intent(this, SettingsActivity::class.java)
+            startActivity(settingsIntent)
+        }
+
+        findViewById<Button>(R.id.rTurn).setOnClickListener {
+            cube.rTurn(false,0,1)
+            val s: String = getCubeString(cube)
+            findViewById<TextView>(R.id.cubeText).text = s
+        }
 
 
     }
 
-    private fun getCubeFaceString(cube: Cube): String{
+    private fun getCubeString(cube: Cube): String{
         var s: String = ""
 
         for (face in cube.getCube()){
@@ -47,12 +54,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d("test", "hello")
     }
 
     override fun onResume() {
         super.onResume()
-        print("here")
     }
 
 }
