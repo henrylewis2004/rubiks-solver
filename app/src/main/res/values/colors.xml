@@ -6,7 +6,14 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+
     <color name="white">#FFFFFFFF</color>
+    <color name="blue">#0e1ed1</color>
+    <color name="red">#d10e0e</color>
+    <color name="green">#0ed10e</color>
+    <color name="orange">#d1690e</color>
+    <color name="yellow">#f4fc02</color>
+
     <color name="background_gradient_start">#000000</color>
     <color name="background_gradient_end">#DDDDDD</color>
     <color name="fastlane_background">#0096a6</color>

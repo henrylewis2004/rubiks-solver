@@ -37,60 +37,65 @@
 
     <Button
         android:id="@+id/newCubeCamButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="55dp"
+        android:layout_height="60dp"
         android:layout_marginStart="158dp"
-        android:layout_marginTop="46dp"
         android:layout_marginEnd="159dp"
         android:layout_marginBottom="155dp"
-        android:text="Picutre"
+        android:textSize="8sp"
+        app:icon="@android:drawable/ic_menu_camera"
+        app:iconGravity="textTop"
+        app:iconSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cubeFaceLayout" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TableLayout
-        android:id="@+id/cubeFaceLayout"
-        android:layout_width="354dp"
-        android:layout_height="293dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginBottom="46dp"
+    <Button
+        android:id="@+id/nextFaceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="141dp"
+        android:layout_marginEnd="142dp"
+        android:layout_marginBottom="36dp"
+        android:text="Next Face ->"
         app:layout_constraintBottom_toTopOf="@+id/newCubeCamButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/newCubeFace"
+        android:layout_width="278dp"
+        android:layout_height="246dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/nextFaceButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newCubeInstructionText">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="106dp">
+        <ImageButton
+            android:id="@+id/cubeFace00"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="176dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/screen_background_light" />
 
-            <Button
-                android:id="@+id/cubeFaceButton0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/cubeFaceButton1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/cubeFaceButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
-    </TableLayout>
+        <ImageButton
+            android:id="@+id/cubeFace01"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="34dp"
+            android:layout_marginBottom="176dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cubeFace00"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/screen_background_light" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
