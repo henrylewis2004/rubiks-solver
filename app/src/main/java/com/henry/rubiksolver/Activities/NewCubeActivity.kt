@@ -1,5 +1,7 @@
 package com.henry.rubiksolver.Activities
 
+import android.app.Activity
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.ColorFilter
@@ -8,6 +10,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -17,11 +21,16 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import com.henry.rubiksolver.R
 import com.henry.rubiksolver.faces
+import org.w3c.dom.Text
 import kotlin.math.log
 
 class NewCubeActivity : AppCompatActivity() {
     val colourIds: IntArray = intArrayOf(R.color.white,R.color.blue,R.color.red,R.color.green,R.color.orange,R.color.yellow)
-    var buttonArray: Array<ImageButton> = arrayOf()
+    var displaySquareArray: Array<ImageView> = arrayOf()
+    var cubeFace: Array<CharArray> = arrayOf(charArrayOf(), charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),)
+
+    val resultIntent: Intent = Intent()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,59 +43,97 @@ class NewCubeActivity : AppCompatActivity() {
             insets
         }
 
-        buttonArray = arrayOf()
+        val nextFaceButton: Button = findViewById<Button>(R.id.nextFaceButton)
+        val instructionText: TextView = findViewById<TextView>(R.id.newCubeInstructionText)
+        nextFaceButton.isEnabled = false
+
+        displaySquareArray = arrayOf()
         var faceCount: Int = 0
 
+        setCubeSqaureButton(findViewById<ImageView>(R.id.cubeFace00))
+        setCubeSqaureButton(findViewById<ImageView>(R.id.cubeFace01))
+        setCubeSqaureButton(findViewById<ImageView>(R.id.cubeFace02))
+        setCubeSqaureButton(findViewById<ImageView>(R.id.cubeFace10))
+        setCubeSqaureButton(findViewById<ImageView>(R.id.cubeFace11))
+        setCubeSqaureButton(findViewById<ImageView>(R.id.cubeFace12))
+        setCubeSqaureButton(findViewById<ImageView>(R.id.cubeFace20))
+        setCubeSqaureButton(findViewById<ImageView>(R.id.cubeFace21))
+        setCubeSqaureButton(findViewById<ImageView>(R.id.cubeFace22))
 
 
+        nextFaceButton.setOnClickListener{
 
+            var faceArray: CharArray = charArrayOf()
+            for (square in displaySquareArray){
+                faceArray += getColour(square.getTag(square.id) as Int)
+                square.setColorFilter(ContextCompat.getColor(this,R.color.default_background))
+                square.setTag(square.id,-1)
+            }
 
-
-        setCubeSqaureButton(findViewById<ImageButton>(R.id.cubeFace00))
-
-        findViewById<Button>(R.id.newCubeBackButton).setOnClickListener{
-            finish()
-        }
-        findViewById<Button>(R.id.nextFaceButton).setOnClickListener{
+            cubeFace[faceCount] = faceArray
             if (faceCount.equals(5)){
+                resultIntent.putExtra("newCubeFace", cubeFace)
+                setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             }
 
             faceCount += 1
-            var face: CharArray = charArrayOf()
-
-            for (button in buttonArray){
-                face += getColour(button.getTag(button.id) as Int)
-            }
 
             if (faceCount.equals(5)){
-                findViewById<Button>(R.id.nextFaceButton).setText("Solve!")
+                nextFaceButton.setText("Solve!")
+                instructionText.setText("")
             }
 
+            when (faceCount){
+                0 -> instructionText.setText("WHITE face with GREEN face on bottom")
+                1 -> instructionText.setText("BLUE face with WHITE face on bottom")
+                2 -> instructionText.setText("RED face with GREEN face on bottom")
+                3 -> instructionText.setText("GREEN face with YELLOW face on bottom")
+                4 -> instructionText.setText("ORANGE face with GREEN face on bottom")
+                5 -> instructionText.setText("YELLOW face with GREEN face on bottom")
+            }
 
+            nextFaceButton.isEnabled = false
+
+
+        }
+
+        findViewById<Button>(R.id.newCubeBackButton).setOnClickListener{
+            finish()
         }
     }
 
 
-    private fun setCubeSqaureButton(button: ImageButton): Unit{
-        button.setTag(button.id,faces.WHITE.ordinal)
+    private fun setCubeSqaureButton(square: ImageView): Unit{
+        square.setTag(square.id,-1)
 
-        button.setOnClickListener {
-            if (button.getTag(button.id) as Int > 4){button.setTag(button.id,faces.WHITE.ordinal)}
-            else{button.setTag(button.id, button.getTag(button.id) as Int + 1)}
+        square.setColorFilter(ContextCompat.getColor(this,R.color.default_background))
 
-            button.setColorFilter(ContextCompat.getColor(this,findNextColour(button.getTag(button.id) as Int)))
+        square.setOnClickListener {
+            when(square.getTag(square.id)){
+                5 -> square.setTag(square.id, faces.WHITE.ordinal)
+                else -> square.setTag(square.id,square.getTag(square.id) as Int + 1)
+            }
+
+            square.setColorFilter(ContextCompat.getColor(this,colourIds[square.getTag(square.id) as Int]))
+            findViewById<Button>(R.id.nextFaceButton).isEnabled = faceFull()
+
         }
-        buttonArray += button
-    }
 
 
-    private fun findNextColour(colour: Int): Int{
-       when(colour){
-           faces.YELLOW.ordinal -> return colourIds[0]
-           else -> return colourIds[colour + 1]
-       }
+        displaySquareArray += square
     }
+
+    private fun faceFull(): Boolean{
+        for (square in displaySquareArray){
+            if (square.getTag(square.id) as Int == -1){
+                return false
+            }
+        }
+
+        return true
+    }
+
 
     private fun getColour(colour: Int): Char{
         when(colour){
@@ -99,6 +146,7 @@ class NewCubeActivity : AppCompatActivity() {
         }
         return 'x'
     }
+
 
 
 }

@@ -29,11 +29,25 @@
         android:layout_marginTop="70dp"
         android:layout_marginEnd="26dp"
         android:layout_marginBottom="571dp"
-        android:text="Take a picture of the WHITE face with the Blue face ontop"
+        android:text="WHITE face with GREEN on bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newCubeBackButton" />
+
+    <Button
+        android:id="@+id/nextFaceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="142dp"
+        android:layout_marginBottom="35dp"
+        android:text="Next Face ->"
+        app:layout_constraintBottom_toTopOf="@+id/newCubeCamButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newCubeFace" />
 
     <Button
         android:id="@+id/newCubeCamButton"
@@ -41,59 +55,128 @@
         android:layout_height="60dp"
         android:layout_marginStart="158dp"
         android:layout_marginEnd="159dp"
-        android:layout_marginBottom="155dp"
+        android:layout_marginBottom="124dp"
         android:textSize="8sp"
         app:icon="@android:drawable/ic_menu_camera"
         app:iconGravity="textTop"
         app:iconSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/nextFaceButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="141dp"
-        android:layout_marginEnd="142dp"
-        android:layout_marginBottom="36dp"
-        android:text="Next Face ->"
-        app:layout_constraintBottom_toTopOf="@+id/newCubeCamButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/newCubeFace"
-        android:layout_width="278dp"
-        android:layout_height="246dp"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
         android:layout_marginStart="14dp"
         android:layout_marginTop="14dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="14dp"
         android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toTopOf="@+id/nextFaceButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newCubeInstructionText">
 
-        <ImageButton
-            android:id="@+id/cubeFace00"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginBottom="176dp"
+        <ImageView
+            android:id="@+id/cubeFace22"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cubeFace21"
+            app:layout_constraintTop_toBottomOf="@+id/cubeFace12"
+            app:srcCompat="@android:drawable/screen_background_light" />
+
+        <ImageView
+            android:id="@+id/cubeFace21"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cubeFace22"
+            app:layout_constraintStart_toEndOf="@+id/cubeFace20"
+            app:layout_constraintTop_toBottomOf="@+id/cubeFace11"
+            app:srcCompat="@android:drawable/screen_background_light" />
+
+        <ImageView
+            android:id="@+id/cubeFace20"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cubeFace21"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cubeFace10"
+            app:srcCompat="@android:drawable/screen_background_light" />
+
+        <ImageView
+            android:id="@+id/cubeFace12"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cubeFace11"
+            app:layout_constraintTop_toBottomOf="@+id/cubeFace02"
+            app:srcCompat="@android:drawable/screen_background_light" />
+
+        <ImageView
+            android:id="@+id/cubeFace11"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/cubeFace12"
+            app:layout_constraintStart_toEndOf="@+id/cubeFace10"
+            app:layout_constraintTop_toBottomOf="@+id/cubeFace01"
+            app:srcCompat="@android:drawable/screen_background_light" />
+
+        <ImageView
+            android:id="@+id/cubeFace10"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/cubeFace20"
+            app:layout_constraintEnd_toStartOf="@+id/cubeFace11"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cubeFace00"
+            app:srcCompat="@android:drawable/screen_background_light" />
+
+        <ImageView
+            android:id="@+id/cubeFace00"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/cubeFace10"
+            app:layout_constraintEnd_toStartOf="@+id/cubeFace01"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/screen_background_light" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/cubeFace01"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="34dp"
-            android:layout_marginBottom="176dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/cubeFace11"
+            app:layout_constraintEnd_toStartOf="@+id/cubeFace02"
             app:layout_constraintStart_toEndOf="@+id/cubeFace00"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/screen_background_light" />
+
+        <ImageView
+            android:id="@+id/cubeFace02"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/cubeFace12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cubeFace01"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/screen_background_light" />
     </androidx.constraintlayout.widget.ConstraintLayout>
