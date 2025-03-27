@@ -2,28 +2,18 @@ package com.henry.rubiksolver.Activities
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.media.Image
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.children
 import com.henry.rubiksolver.R
 import com.henry.rubiksolver.faces
-import org.w3c.dom.Text
-import kotlin.math.log
 
 class NewCubeActivity : AppCompatActivity() {
     val colourIds: IntArray = intArrayOf(R.color.white,R.color.blue,R.color.red,R.color.green,R.color.orange,R.color.yellow)
@@ -46,11 +36,6 @@ class NewCubeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_new_cube)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         val nextFaceButton: Button = findViewById<Button>(R.id.nextFaceButton)
         val instructionText: TextView = findViewById<TextView>(R.id.newCubeInstructionText)

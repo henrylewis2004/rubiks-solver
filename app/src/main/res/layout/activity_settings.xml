@@ -5,22 +5,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2E2D2D"
     tools:context=".Activities.SettingsActivity">
 
     <TextView
-        android:id="@+id/titleText"
+        android:id="@+id/settingsTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="154dp"
-        android:layout_marginEnd="189dp"
-        android:layout_marginBottom="558dp"
-        android:text="settings"
-        android:textColor="#FFFFFF"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="675dp"
+        android:fontFamily="sans-serif"
+        android:text="Settings"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/settingsBackButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -36,4 +36,60 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:layout_width="350dp"
+        android:layout_height="644dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsBackButton">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Switch" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Switch
+                android:id="@+id/switch2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Switch" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="263dp"
+            android:layout_height="77dp">
+
+            <TextView
+                android:id="@+id/permissionButtonText"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:text="Camera Permission  "
+                android:textSize="16sp" />
+
+            <ToggleButton
+                android:id="@+id/permissionsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
