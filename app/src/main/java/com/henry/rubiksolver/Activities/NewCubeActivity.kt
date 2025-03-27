@@ -13,6 +13,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -27,11 +28,21 @@ import kotlin.math.log
 class NewCubeActivity : AppCompatActivity() {
     val colourIds: IntArray = intArrayOf(R.color.white,R.color.blue,R.color.red,R.color.green,R.color.orange,R.color.yellow)
     var displaySquareArray: Array<ImageView> = arrayOf()
-    var cubeFace: Array<CharArray> = arrayOf(charArrayOf(), charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),)
+    var cubeFace: Array<CharArray> = arrayOf(charArrayOf(), charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf())
 
     val resultIntent: Intent = Intent()
 
+    val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result ->
+        if (result.resultCode == Activity.RESULT_OK){
+            val returnData = result.data?.getSerializableExtra("cubeFacePic") as? Array<CharArray>
 
+            try {
+            }
+            catch(e: Error){
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +82,7 @@ class NewCubeActivity : AppCompatActivity() {
             }
 
             cubeFace[faceCount] = faceArray
+
             if (faceCount.equals(5)){
                 resultIntent.putExtra("newCubeFace", cubeFace)
                 setResult(Activity.RESULT_OK, resultIntent)
@@ -92,14 +104,16 @@ class NewCubeActivity : AppCompatActivity() {
                 4 -> instructionText.setText("ORANGE face with GREEN face on bottom")
                 5 -> instructionText.setText("YELLOW face with GREEN face on bottom")
             }
-
             nextFaceButton.isEnabled = false
-
-
         }
 
         findViewById<Button>(R.id.newCubeBackButton).setOnClickListener{
             finish()
+        }
+
+        findViewById<Button>(R.id.newCubeCamButton).setOnClickListener {
+            val camIntent = Intent(this, NewCubeCamActivity::class.java)
+            startForResult.launch(camIntent)
         }
     }
 
@@ -130,7 +144,6 @@ class NewCubeActivity : AppCompatActivity() {
                 return false
             }
         }
-
         return true
     }
 

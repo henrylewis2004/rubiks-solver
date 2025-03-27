@@ -20,6 +20,7 @@ glide = "4.11.0"
 activity = "1.8.0"
 
 [libraries]
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraView" }
 androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraView" }
 androidx-camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "cameraView" }
 androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraView" }

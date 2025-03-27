@@ -5,11 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.henry.rubiksolver.Cube
 import com.henry.rubiksolver.R
+import com.henry.rubiksolver.Solver
 import com.henry.rubiksolver.databinding.ActivityMainBinding
 import org.w3c.dom.Text
 
@@ -17,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     var cube: Cube = Cube()
+    val solverAgent: Solver = Solver(0,0)
 
     val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result ->
@@ -26,9 +31,10 @@ class MainActivity : AppCompatActivity() {
                 try {
                     cube.setCubeFaces(returnData!!)
                     findViewById<TextView>(R.id.cubeText).text = getCubeString(cube)
+                    solveCube()
                 }
                 catch(e: Error){
-                    Log.d("resultData", e.message!!)
+                    Log.d("Errors",e.message.toString())
                 }
             }
     }
@@ -48,11 +54,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(settingsIntent)
         }
 
-        findViewById<Button>(R.id.rTurn).setOnClickListener {
-            cube.rTurn(false,0,1)
-            val s: String = getCubeString(cube)
-            findViewById<TextView>(R.id.cubeText).text = s
-        }
+
 
 
     }
@@ -70,6 +72,12 @@ class MainActivity : AppCompatActivity() {
         return s
 
     }
+
+    private fun solveCube(){
+        findViewById<ImageView>(R.id.playButton).isVisible = true
+
+    }
+
 
     override fun onStart() {
         super.onStart()

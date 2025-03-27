@@ -5,7 +5,9 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+
     <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RubikSolver"
         tools:targetApi="31">
+        <activity
+            android:name=".Activities.NewCubeCamActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.NewCubeActivity"
             android:exported="false" />
