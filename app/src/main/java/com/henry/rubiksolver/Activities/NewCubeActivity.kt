@@ -30,12 +30,10 @@ class NewCubeActivity : AppCompatActivity() {
     var displaySquareArray: Array<ImageView> = arrayOf()
     var cubeFace: Array<CharArray> = arrayOf(charArrayOf(), charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf(),charArrayOf())
 
-    val resultIntent: Intent = Intent()
-
     val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result ->
         if (result.resultCode == Activity.RESULT_OK){
-            val returnData = result.data?.getSerializableExtra("cubeFacePic") as? Array<CharArray>
+            val returnData = result.data?.getIntArrayExtra("cubeFaceResult")
 
             try {
             }
@@ -84,8 +82,7 @@ class NewCubeActivity : AppCompatActivity() {
             cubeFace[faceCount] = faceArray
 
             if (faceCount.equals(5)){
-                resultIntent.putExtra("newCubeFace", cubeFace)
-                setResult(Activity.RESULT_OK, resultIntent)
+                setResult(Activity.RESULT_OK, Intent().putExtra("newCubeFace", cubeFace))
                 finish()
             }
 
