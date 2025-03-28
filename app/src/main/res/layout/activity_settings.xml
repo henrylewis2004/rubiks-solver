@@ -38,16 +38,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
-        android:layout_width="350dp"
-        android:layout_height="644dp"
-        android:layout_marginStart="30dp"
+        android:layout_width="249dp"
+        android:layout_height="630dp"
+        android:layout_marginStart="150dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="31dp"
+        android:layout_marginEnd="12dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingsBackButton">
+        app:layout_constraintTop_toBottomOf="@+id/settingsBackButton"
+        app:layout_constraintVertical_bias="0.0">
 
         <TableRow
             android:layout_width="match_parent"
@@ -62,7 +63,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <Switch
                 android:id="@+id/switch2"
@@ -79,7 +80,7 @@
                 android:id="@+id/permissionButtonText"
                 android:layout_width="wrap_content"
                 android:layout_height="49dp"
-                android:text="Camera Permission  "
+                android:text="Camera Permissions  "
                 android:textSize="16sp" />
 
             <ToggleButton
@@ -90,6 +91,13 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" >
+
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CheckBox" />
+        </TableRow>
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

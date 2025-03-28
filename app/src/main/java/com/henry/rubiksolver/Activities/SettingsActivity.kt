@@ -1,11 +1,16 @@
 package com.henry.rubiksolver.Activities
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.henry.rubiksolver.R
 
 class SettingsActivity : AppCompatActivity() {
@@ -15,9 +20,37 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
 
-       findViewById<Button>(R.id.settingsBackButton).setOnClickListener{ //back button
-           finish() //close activity
-       }
+        findViewById<Button>(R.id.settingsBackButton).setOnClickListener{ //back button
+               finish() //close activity
+        }
 
+        val permissionButton: ToggleButton = findViewById<ToggleButton>(R.id.permissionsButton)
+        permissionButton.isChecked = hasRequiredPermissions()
+
+        permissionButton.setOnClickListener {
+            if(!hasRequiredPermissions()){
+                requestPermissions()
+            }
+            permissionButton.isChecked = hasRequiredPermissions()
+        }
+
+
+    }
+
+    private fun hasRequiredPermissions(): Boolean{
+        return SettingsActivity.CAMERAX_PERMISSIONS.all {
+            ContextCompat.checkSelfPermission(applicationContext,it) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    private fun requestPermissions(): Unit{
+        ActivityCompat.requestPermissions(this, SettingsActivity.CAMERAX_PERMISSIONS,0)
+
+    }
+
+    companion object{
+        private val CAMERAX_PERMISSIONS = arrayOf(
+            Manifest.permission.CAMERA
+        )
     }
 }
