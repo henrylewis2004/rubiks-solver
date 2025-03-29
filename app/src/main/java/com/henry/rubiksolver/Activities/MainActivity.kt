@@ -77,18 +77,35 @@ class MainActivity : AppCompatActivity() {
     private fun solveCube(){
         findViewById<ImageView>(R.id.playButton).isVisible = true
         val cubeFace = arrayOf(
-            charArrayOf('g','w','b','w','w','w','b','w','w'),
-            charArrayOf('r','g','o','g','b','o','y','g','o'),
-            charArrayOf('y','y','w','r','r','b','g','y','r'),
-            charArrayOf('y','b','o','o','g','r','g','b','b'),
-            charArrayOf('g','r','r','o','o','o','o','b','r'),
-            charArrayOf('b','y','w','y','y','g','w','r','y')
+            charArrayOf('g','o','w','b','w','b','o','w','r'),
+            charArrayOf('r','r','g','g','b','y','o','g','g'),
+            charArrayOf('o','o','y','r','r','g','g','r','b'),
+            charArrayOf('y','o','w','o','g','y','w','b','r'),
+            charArrayOf('w','y','y','w','o','w','b','b','b'),
+            charArrayOf('r','w','b','r','y','g','y','y','o')
         )
-        val al: Array<String> = solverAgent.getAlgorithm(cubeFace)
+        val crashCube = arrayOf(
+            charArrayOf('b','y','o','r','w','g','r','o','r'),
+            charArrayOf('b','b','y','g','b','y','w','r','b'),
+            charArrayOf('w','g','g','o','r','w','y','b','b'),
+            charArrayOf('g','y','g','g','g','w','o','o','y'),
+            charArrayOf('y','r','r','r','o','w','g','w','w'),
+            charArrayOf('o','y','r','o','y','b','o','b','w')
+        )
+        val finalSolveCube = arrayOf(
+            charArrayOf('w','w','w','w','w','w','w','w','w'),
+            charArrayOf('b','r','r','b','b','b','b','b','b'),
+            charArrayOf('r','r','g','r','r','o','r','r','g'),
+            charArrayOf('g','g','g','g','g','g','b','g','o'),
+            charArrayOf('o','o','o','b','o','o','r','o','o'),
+            charArrayOf('y','y','y','y','y','y','y','y','y'),
+        )
+        val al: Array<String> = solverAgent.getAlgorithm(finalSolveCube)
         var s = ""
         for (a in al){
-            s +=(a +",")
+            s +=(a +", ")
         }
+        Log.d("algorithm", s)
         findViewById<TextView>(R.id.cubeText).text = s
 
     }

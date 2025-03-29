@@ -14,7 +14,6 @@
         android:layout_marginStart="149dp"
         android:layout_marginTop="200dp"
         android:layout_marginEnd="149dp"
-        android:layout_marginBottom="200dp"
         android:text="New Cube"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,12 +23,13 @@
 
     <TextView
         android:id="@+id/cubeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="158dp"
+        android:layout_height="212dp"
         android:layout_marginStart="176dp"
         android:layout_marginEnd="177dp"
         android:layout_marginBottom="250dp"
         android:text="TextView"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

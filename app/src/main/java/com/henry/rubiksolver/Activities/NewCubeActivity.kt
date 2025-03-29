@@ -129,10 +129,11 @@ class NewCubeActivity : AppCompatActivity() {
 
     private fun fillFace(face: IntArray): Unit{
         for (i in 0..8){
-            val square = displaySquareArray[i]
-            square.setTag(square.id, face[i])
-            square.setColorFilter(ContextCompat.getColor(this,colourIds[face[i]]))
-
+            if(face[i] > -1) {
+                val square = displaySquareArray[i]
+                square.setTag(square.id, face[i])
+                square.setColorFilter(ContextCompat.getColor(this, colourIds[face[i]]))
+            }
 
         }
 

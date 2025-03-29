@@ -125,15 +125,16 @@ public open class Cube {
     }
 
     public fun getSideColour(square: Int, frontFace: Int, bottomFace: Int): Char{
-        val rotSquare: Int = rotationOrder[getRotation(frontFace,bottomFace)][square]
 
-        when(rotSquare)
-        {
-            1 -> return cubeFace[getSideFace(false,frontFace,getSideFace(false,frontFace,bottomFace))][7]
+        when(square){
+            1 -> return cubeFace[getOppositeFace(bottomFace)][rotationOrder[getRotation(getOppositeFace(bottomFace),frontFace)][7]]
             3 -> return cubeFace[getSideFace(false,frontFace,bottomFace)][5]
             5 -> return cubeFace[getSideFace(true,frontFace,bottomFace)][3]
-            7 -> return cubeFace[getSideFace(true,frontFace,getSideFace(false,frontFace,bottomFace))][1]
+            7 -> return cubeFace[bottomFace][rotationOrder[getRotation(bottomFace, getOppositeFace(frontFace))][1]]
+
         }
+
+
         return 'x'
     }
 
@@ -230,19 +231,19 @@ public open class Cube {
         i++
 
         //bottom or top face
-        rotation = getRotation(order[i+1],bottomFace) //rotation for back piece
+        rotation = getRotation(order[i+1],order[i+2 - (2 * utilFun.booleanToInt(prime))]) //rotation for back piece
 
-        cubeFace[order[i]][rotationOrder[rotationSwap][2]] = cubeFace[order[i + 1]][rotationOrder[rotation][6]]
-        cubeFace[order[i]][rotationOrder[rotationSwap][5]] = cubeFace[order[i + 1]][rotationOrder[rotation][3]]
-        cubeFace[order[i]][rotationOrder[rotationSwap][8]] = cubeFace[order[i + 1]][rotationOrder[rotation][0]]
+        cubeFace[order[i]][rotationOrder[rotationSwap][2]] = cubeFace[order[i + 1]][rotationOrder[rotation][2]]
+        cubeFace[order[i]][rotationOrder[rotationSwap][5]] = cubeFace[order[i + 1]][rotationOrder[rotation][5]]
+        cubeFace[order[i]][rotationOrder[rotationSwap][8]] = cubeFace[order[i + 1]][rotationOrder[rotation][8]]
         i++
 
         //back face
         rotationSwap = getRotation(order[i+1], order[0 + (2 * utilFun.booleanToInt(prime))]) //rotation for either top or bottom, depending on prime
 
-        cubeFace[order[i]][rotationOrder[rotation][0]] = cubeFace[order[i+1]][rotationOrder[rotationSwap][2]]
-        cubeFace[order[i]][rotationOrder[rotation][3]] = cubeFace[order[i+1]][rotationOrder[rotationSwap][5]]
-        cubeFace[order[i]][rotationOrder[rotation][6]] = cubeFace[order[i+1]][rotationOrder[rotationSwap][8]]
+        cubeFace[order[i]][rotationOrder[rotation][2]] = cubeFace[order[i+1]][rotationOrder[rotationSwap][2]]
+        cubeFace[order[i]][rotationOrder[rotation][5]] = cubeFace[order[i+1]][rotationOrder[rotationSwap][5]]
+        cubeFace[order[i]][rotationOrder[rotation][8]] = cubeFace[order[i+1]][rotationOrder[rotationSwap][8]]
         i++
 
         //top or bottom face
@@ -251,7 +252,7 @@ public open class Cube {
         cubeFace[order[i]][rotationOrder[rotationSwap][8]] = tempFace[2]
 
         //rotate side piece
-        rotateFace(prime, getSideFace(!prime, face, bottomFace))
+        rotateFace(prime, getSideFace(true, face, bottomFace))
     }
 
     public fun uTurn(prime: Boolean, face: Int, bottomFace: Int): Unit{
