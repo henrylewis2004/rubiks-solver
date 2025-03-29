@@ -1,5 +1,7 @@
 package com.henry.rubiksolver
 
+import kotlin.math.abs
+
 
 public class SolverUtil {
 
@@ -114,5 +116,29 @@ public class SolverUtil {
         }
         if (prime){return (action + "'")}
         return (action)
+    }
+
+    public fun rotateYLayer(frontFace:Int, col:Int): Array<String>{
+        val value:Int = abs(frontFace - col)
+        when{
+            value == 2-> return arrayOf("u","u")
+            frontFace == faces.ORANGE.ordinal ->{
+                var a = arrayOf("u")
+                if(frontFace - col == 3){ a += "'"}
+                return a
+            }
+            frontFace == faces.BLUE.ordinal ->{
+                var a = arrayOf("u")
+                if(frontFace - col == -1){ a += "'"}
+                return a
+            }
+            else -> {
+                var a = arrayOf("u")
+                if (frontFace - col < 0) { a += "'"}
+                return a
+            }
+
+        }
+        return arrayOf()
     }
 }

@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     var cube: Cube = Cube()
-    val solverAgent: Solver = Solver(0)
+    val solverAgent: Solver = Solver()
 
     val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result ->
@@ -100,7 +100,15 @@ class MainActivity : AppCompatActivity() {
             charArrayOf('o','o','o','b','o','o','r','o','o'),
             charArrayOf('y','y','y','y','y','y','y','y','y'),
         )
-        val al: Array<String> = solverAgent.getAlgorithm(finalSolveCube)
+        val finalSolveCube2 = arrayOf(
+            charArrayOf('w','w','w','w','w','w','w','w','w'),
+            charArrayOf('b','b','b','b','b','b','b','b','b'),
+            charArrayOf('r','r','r','r','r','g','r','r','r'),
+            charArrayOf('g','g','g','g','g','g','g','o','g'),
+            charArrayOf('o','o','o','r','o','o','o','o','o'),
+            charArrayOf('y','y','y','y','y','y','y','y','y'),
+        )
+        val al: Array<String> = solverAgent.getAlgorithm(finalSolveCube2)
         var s = ""
         for (a in al){
             s +=(a +", ")
