@@ -1,5 +1,7 @@
 package com.henry.rubiksolver
 
+import android.util.Log
+
 enum class faces {WHITE, BLUE, RED, GREEN, ORANGE, YELLOW}
 
 
@@ -65,6 +67,10 @@ public open class Cube {
         return cubeFace[face][rotationOrder[getRotation(face, bottomFace)][square]]
     }
 
+    public fun getSquarePos(face: Int, bottomFace: Int, square: Int): Int{
+        return rotationOrder[getRotation(face, bottomFace)][square]
+    }
+
     public fun getSideFace(right: Boolean, face: Int, bottomFace: Int): Int{ //right refers to which side is wanted, if true the side to the right is returned
         when(face) {
             faces.WHITE.ordinal -> when (bottomFace){
@@ -102,6 +108,47 @@ public open class Cube {
             }
         }
         return -1 //should be an error if does not return earlier so will break code and will be noticeable
+    }
+
+    public fun getSideFaceColour(side: Int,frontFace: Int,bottomFace: Int): Char{
+        val rotSquare: Int = rotationOrder[getRotation(frontFace,bottomFace)][side]
+
+        when(rotSquare){
+            1 -> return cubeFace[getSideFace(false,frontFace,getSideFace(false,frontFace,bottomFace))][4]
+            3 -> return cubeFace[getSideFace(false,frontFace,bottomFace)][4]
+            5 -> return cubeFace[getSideFace(true,frontFace,bottomFace)][4]
+            7 -> return cubeFace[getSideFace(true,frontFace,getSideFace(false,frontFace,bottomFace))][4]
+        }
+
+
+        return 'x'
+    }
+
+    public fun getSideColour(square: Int, frontFace: Int, bottomFace: Int): Char{
+        val rotSquare: Int = rotationOrder[getRotation(frontFace,bottomFace)][square]
+
+        when(rotSquare)
+        {
+            1 -> return cubeFace[getSideFace(false,frontFace,getSideFace(false,frontFace,bottomFace))][7]
+            3 -> return cubeFace[getSideFace(false,frontFace,bottomFace)][5]
+            5 -> return cubeFace[getSideFace(true,frontFace,bottomFace)][3]
+            7 -> return cubeFace[getSideFace(true,frontFace,getSideFace(false,frontFace,bottomFace))][1]
+        }
+        return 'x'
+    }
+
+    public fun getSideSquare(square: Int, frontFace: Int, bottomFace: Int): Int{
+        val rotSquare: Int = rotationOrder[getRotation(frontFace,bottomFace)][square]
+
+        when(rotSquare){
+            1 -> return 7
+            3 -> return 5
+            5 -> return 3
+            7 -> return 1
+        }
+
+        return -1
+
     }
 
     private fun getRotation(face: Int, bottomFace: Int): Int{
@@ -185,9 +232,9 @@ public open class Cube {
         //bottom or top face
         rotation = getRotation(order[i+1],bottomFace) //rotation for back piece
 
-        cubeFace[order[i]][rotationOrder[rotationSwap][2]] = cubeFace[order[i+1]][rotationOrder[rotation][0]]
-        cubeFace[order[i]][rotationOrder[rotationSwap][5]] = cubeFace[order[i+1]][rotationOrder[rotation][3]]
-        cubeFace[order[i]][rotationOrder[rotationSwap][8]] = cubeFace[order[i+1]][rotationOrder[rotation][6]]
+        cubeFace[order[i]][rotationOrder[rotationSwap][2]] = cubeFace[order[i + 1]][rotationOrder[rotation][6]]
+        cubeFace[order[i]][rotationOrder[rotationSwap][5]] = cubeFace[order[i + 1]][rotationOrder[rotation][3]]
+        cubeFace[order[i]][rotationOrder[rotationSwap][8]] = cubeFace[order[i + 1]][rotationOrder[rotation][0]]
         i++
 
         //back face
@@ -259,7 +306,7 @@ public open class Cube {
     }
 	
     public fun fTurn(prime: Boolean, face: Int, bottomFace: Int): Unit{
-        rTurn(prime, getSideFace(!prime, face, bottomFace), bottomFace)
+        rTurn(prime, getSideFace(false, face, bottomFace), bottomFace)
     }
 
     public fun bTurn(prime: Boolean, face: Int, bottomFace: Int): Unit{

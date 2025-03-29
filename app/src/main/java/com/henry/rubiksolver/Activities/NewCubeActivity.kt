@@ -1,11 +1,14 @@
 package com.henry.rubiksolver.Activities
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -26,8 +29,12 @@ class NewCubeActivity : AppCompatActivity() {
             val returnData = result.data?.getIntArrayExtra("cubeFaceResult")
 
             try {
+                val x = returnData
+                fillFace(returnData!!)
+
             }
-            catch(e: Error){
+            catch(e: Exception){
+                Toast.makeText(baseContext,"exception: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -119,6 +126,20 @@ class NewCubeActivity : AppCompatActivity() {
 
         displaySquareArray += square
     }
+
+    private fun fillFace(face: IntArray): Unit{
+        for (i in 0..8){
+            val square = displaySquareArray[i]
+            square.setTag(square.id, face[i])
+            square.setColorFilter(ContextCompat.getColor(this,colourIds[face[i]]))
+
+
+        }
+
+        findViewById<Button>(R.id.nextFaceButton).isEnabled = faceFull()
+
+    }
+
 
     private fun faceFull(): Boolean{
         for (square in displaySquareArray){

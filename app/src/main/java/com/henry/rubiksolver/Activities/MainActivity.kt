@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     var cube: Cube = Cube()
-    val solverAgent: Solver = Solver(0,0)
+    val solverAgent: Solver = Solver(0)
 
     val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result ->
@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        solveCube()
 
 
         findViewById<Button>(R.id.newCubeButton).setOnClickListener { //goto make new camera activity
@@ -75,6 +76,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun solveCube(){
         findViewById<ImageView>(R.id.playButton).isVisible = true
+        val cubeFace = arrayOf(
+            charArrayOf('g','w','b','w','w','w','b','w','w'),
+            charArrayOf('r','g','o','g','b','o','y','g','o'),
+            charArrayOf('y','y','w','r','r','b','g','y','r'),
+            charArrayOf('y','b','o','o','g','r','g','b','b'),
+            charArrayOf('g','r','r','o','o','o','o','b','r'),
+            charArrayOf('b','y','w','y','y','g','w','r','y')
+        )
+        val al: Array<String> = solverAgent.getAlgorithm(cubeFace)
+        var s = ""
+        for (a in al){
+            s +=(a +",")
+        }
+        findViewById<TextView>(R.id.cubeText).text = s
 
     }
 

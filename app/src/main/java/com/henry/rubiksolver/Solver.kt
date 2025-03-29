@@ -1,37 +1,146 @@
 package com.henry.rubiksolver
 
-public open class Solver constructor(level: Int, frontFace: Int) {
+import android.util.Log
+import kotlin.math.abs
+
+public open class Solver constructor(level: Int) {
     private val solverUtil: SolverUtil = SolverUtil()
     private val difficulty: Int = level
-    private var frontFace: Int = frontFace
+    private var frontFace: Int = faces.WHITE.ordinal
+    private var bottomFace: Int = faces.GREEN.ordinal
 
     public fun getDifficulty(): Int{
         return difficulty
     }
 
-    public fun getAlgorithm(cube: Cube): Array<String>{
-        var algorithm: Array<String> = arrayOf("")
+    public fun getAlgorithm(cubeFaces: Array<CharArray>): Array<String>{
+        var algorithm: Array<String> = arrayOf()
+        val solveCube: Cube = Cube()
+        solveCube.setCubeFaces(cubeFaces)
 
-        algorithm += getWhiteFace(cube)
-        if (difficulty.equals(0)){ algorithm += getSecondLayer(cube)}
-        algorithm += getYellowFace(cube)
-        algorithm += finalSolve(cube)
+        algorithm += getWhiteFace(solveCube)
+        /*
+        algorithm += getSecondLayer(solveCube)
+        algorithm += getYellowFace(solveCube)
+        algorithm += finalSolve(solveCube)
+
+         */
 
 
         return algorithm
     }
 
-    private fun getWhiteFace(cube: Cube): Array<String>{
-        var algorithm: Array<String> = arrayOf("")
+    private fun getWhiteFace(cube: Cube): Array<String> {
+        var algorithm: Array<String> = arrayOf()
+        val crossSquares: IntArray = intArrayOf(3, 1, 5, 7)
+        var cubeFace: CharArray = cube.getCubeFace(faces.WHITE.ordinal)
+        bottomFace = faces.GREEN.ordinal
 
-        when(difficulty){
-            0 ->{
+        while (!solverUtil.isCrossSolved(cube, faces.WHITE.ordinal, bottomFace)) { //white cross
+            cubeFace = cube.getCubeFace(faces.WHITE.ordinal)
 
+            for (squareId in crossSquares.indices) {
+                val square = crossSquares[squareId]
 
+                if (cubeFace[square] == 'w') {
+                    val sideFaceColour: Char = cube.getSideFaceColour(square, faces.WHITE.ordinal, bottomFace)
+                    val sideColour: Char = cube.getSideColour(square, faces.WHITE.ordinal, bottomFace)
+
+                    if (sideColour != sideFaceColour) {
+                        val whiteSqCnt = solverUtil.correctCrossCount(faces.WHITE.ordinal, bottomFace, cube)
+
+                        if (whiteSqCnt == 0) { //no correct squares yet
+                            var nextSquare: Int = squareId - 1
+                            if (nextSquare < 0) {
+                                nextSquare = 3
+                            }
+
+                            if (cube.getSideFaceColour(crossSquares[nextSquare], faces.WHITE.ordinal, bottomFace) == sideFaceColour) {
+                                algorithm += solverUtil.move(cube, false, "f'", faces.WHITE.ordinal, bottomFace)
+                            }
+
+                            else {
+                                algorithm += solverUtil.move(cube, false, "f", faces.WHITE.ordinal, bottomFace)
+
+                                if (sideColour != cube.getSideFaceColour(crossSquares[squareId + 1], faces.WHITE.ordinal, bottomFace)) {
+                                    algorithm += solverUtil.move(cube,false, "f", faces.WHITE.ordinal, bottomFace)
+                                }
+                            }
+                        }
+                        else {
+                            val targetSquare = solverUtil.getWhiteTargetCrossSquare(sideColour)
+                            var squarePlacement: Int = 0
+                            var a: Array<String> = arrayOf()
+
+                            for (i in 0..3) {
+                                if (targetSquare == crossSquares[i]) {
+                                    squarePlacement = i
+                                }
+                            }
+
+                            when (square) {
+                                1 -> a += "u"
+                                3 -> a += "l"
+                                5 -> a += "r"
+                                7 -> a += "d"
+                            }
+
+                            val distance = squarePlacement - squareId
+                            when {
+                                abs(distance) == 2 -> a += arrayOf("f", "f", a[0] + "'", "f", "f")
+                                distance == 1 || distance == -3 -> arrayOf("f'", a[0] + "'", "f")
+                                else -> a += arrayOf("f", a[0] + "'", "f'")
+                            }
+
+                            a += (a[0])
+
+                            for (move in a) {
+                                algorithm += solverUtil.move(cube, move.length > 1, move[0].toString(), faces.WHITE.ordinal, bottomFace)
+                            }
+                        }
+                        break
+                    }
+                }
 
             }
-        }
 
+            for (face in 1..5){
+                when {
+                    face < 5 -> bottomFace = faces.WHITE.ordinal
+                    face == 5 -> bottomFace = faces.GREEN.ordinal
+
+                }
+                cubeFace = cube.getCubeFace(face)
+                for (squareId in crossSquares){
+
+                    val adjSquareId = cube.getSquarePos(face,bottomFace,squareId)
+                    val square = cubeFace[adjSquareId]
+                    if (square == 'w'){
+                        val sideCol: Char = cube.getSideColour(face,bottomFace,adjSquareId)
+                        var a: Array<String> = arrayOf()
+
+                        for (whiteSquareId in crossSquares){
+                            val bFace = faces.GREEN.ordinal
+                            if (cube.getCubeFace(0)[whiteSquareId] == 'w'){
+                                //work here
+                            }
+
+                        }
+
+                        if (face!=5) {
+                            when (squareId) {
+                                3 -> a += arrayOf("l'", "u'", "l", "f", "f")
+                                5 -> a += arrayOf("r", "u", "r'", "f", "f")
+                                else -> a += arrayOf("f", "r", "u", "f'", "f", "f")
+                            }
+                        }
+
+                    }
+                }
+            }
+
+
+        }
 
         return algorithm
     }
