@@ -3,7 +3,9 @@ package com.henry.rubiksolver
 import kotlin.math.abs
 
 
+
 public class SolverUtil {
+    val utilFun: Util = Util()
 
     public fun isFaceSolved(face: CharArray): Boolean{
         val middleSquare: Char
@@ -55,20 +57,53 @@ public class SolverUtil {
         return -1
     }
 
-    public fun getTargetPos(col: Char): CharArray{
-        when(col){
-            'b' -> charArrayOf('o','r','g')
-            'o' -> charArrayOf('g','b','r')
-            'r' -> charArrayOf('b','g','o')
-            'g' -> charArrayOf('r','o','b')
+    public fun isSecondLayerSolved(cube: Cube): Boolean{
+        val cubeFace: Array<CharArray> = cube.getCube()
+        for (square in cubeFace[faces.WHITE.ordinal]){
+            if (square != 'w') { return false}
+        }
+
+        val secondLayerPieces: IntArray = intArrayOf(3,4,5,6,7,8)
+
+        for (face in 1..4){
+            for (squareId in secondLayerPieces){
+                if (cube.getSquare(face,faces.WHITE.ordinal,squareId) != getColour(face)){ return false}
+            }
+        }
+
+        return true
+    }
+
+    public fun cornerCorrect(cube: Cube, face:Int, bottomFace: Int, corner:Int): Boolean{
+        if (cube.getSquare(face,bottomFace,corner) == getColour(face) && cube.getSquare(face,bottomFace,corner-3) == getColour(face)){
+            val sideFace:Int = cube.getSideFace(corner == 8, face, bottomFace)
+
+            if (cube.getSquare(sideFace,bottomFace,8 - 2 * utilFun.booleanToInt(corner == 8)) == getColour(sideFace) && cube.getSquare(sideFace,bottomFace,8 - 2 * utilFun.booleanToInt(corner == 8) - 3) == getColour(sideFace)){
+                return (cube.getSquare(bottomFace,cube.getOppositeFace(face),0 + 2 * utilFun.booleanToInt(corner == 8)) == getColour(bottomFace))
+
+            }
 
         }
-        return charArrayOf()
+
+        return false
     }
+
 
 
     public fun sideCorrect(cube: Cube, square: Int, face: Int, bottomFace: Int): Boolean{
         return (cube.getSideColour(square,face,bottomFace) == cube.getSideFaceColour(square,face,bottomFace))
+    }
+
+    public fun distance(face: Int, targetFace: Int): Int{
+        val distance: Int = face - targetFace
+        when {
+            abs(distance) == 2 -> return 2 //equidistance
+            distance == -1 || distance == 3 -> return 1 //1 to the right
+            else -> return 3 //3 to the right or 1 to the left
+
+        }
+
+
     }
 
 

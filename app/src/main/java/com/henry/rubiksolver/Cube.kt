@@ -124,6 +124,93 @@ public open class Cube {
         return 'x'
     }
 
+    public fun getCornerSideColours(face: Int,bottomFace: Int, square: Int): CharArray{
+        var values: CharArray = CharArray(2)
+        val rotSquare: Int = rotationOrder[getRotation(face,bottomFace)][square]
+
+
+        val sideFace: Int = getSideFace(rotSquare == 2 || rotSquare == 8, face, bottomFace)
+
+        when (rotSquare){
+            0 -> {
+                values[0] = cubeFace[sideFace][rotationOrder[getRotation(sideFace,bottomFace)][2]]
+                values[1] = cubeFace[getOppositeFace(bottomFace)][rotationOrder[getRotation(getOppositeFace(bottomFace),face)][6]]
+            }
+            2 -> {
+                values[0] = cubeFace[sideFace][rotationOrder[getRotation(sideFace,bottomFace)][0]]
+                values[1] = cubeFace[getOppositeFace(bottomFace)][rotationOrder[getRotation(getOppositeFace(bottomFace),face)][8]]
+            }
+            6 -> {
+                values[0] = cubeFace[sideFace][rotationOrder[getRotation(sideFace,bottomFace)][8]]
+                values[1] = cubeFace[bottomFace][rotationOrder[getRotation(bottomFace,sideFace)][6]]
+            }
+            8 -> {
+                values[0] = cubeFace[sideFace][rotationOrder[getRotation(sideFace,bottomFace)][6]]
+                values[1] = cubeFace[bottomFace][rotationOrder[getRotation(bottomFace,sideFace)][8]]
+            }
+        }
+
+
+        return values
+    }
+
+    public fun getCornerSideLoc(face: Int,bottomFace: Int, square: Int): IntArray{
+        var values: IntArray = IntArray(2)
+        val rotSquare: Int = rotationOrder[getRotation(face,bottomFace)][square]
+
+
+        val sideFace: Int = getSideFace(rotSquare == 2 || rotSquare == 8, face, bottomFace)
+
+        when (rotSquare){
+            0 -> {
+                values[0] = rotationOrder[getRotation(sideFace,bottomFace)][2]
+                values[1] = rotationOrder[getRotation(getOppositeFace(bottomFace),face)][6]
+            }
+            2 -> {
+                values[0] = rotationOrder[getRotation(sideFace,bottomFace)][0]
+                values[1] = rotationOrder[getRotation(getOppositeFace(bottomFace),face)][8]
+            }
+            6 -> {
+                values[0] = rotationOrder[getRotation(sideFace,bottomFace)][8]
+                values[1] = rotationOrder[getRotation(bottomFace,sideFace)][6]
+            }
+            8 -> {
+                values[0] = rotationOrder[getRotation(sideFace,bottomFace)][6]
+                values[1] = rotationOrder[getRotation(bottomFace,sideFace)][8]
+            }
+        }
+
+
+        return values
+    }
+
+    public fun getCornerSide(colours: CharArray): IntArray{
+        var value: IntArray = IntArray(2) //x = face, y = square position on face
+        val cornerPos: IntArray = intArrayOf(3,1,5,7)
+        var bottomFace: Int
+
+        for (face in 0..cubeFace.size){
+            when(face){
+                faces.WHITE.ordinal -> bottomFace = faces.GREEN.ordinal
+                faces.YELLOW.ordinal -> bottomFace = faces.GREEN.ordinal
+                else -> bottomFace = faces.WHITE.ordinal
+            }
+            for (squareId in cornerPos){
+                if (cubeFace[face][squareId] == colours[0] || cubeFace[face][squareId] == colours[1])  {
+                    if (getSideColour(squareId,face,bottomFace) == colours[0] || getSideColour(squareId,face,bottomFace) == colours[1]){
+                        return intArrayOf(face,squareId)
+
+                    }
+                }
+
+            }
+        }
+
+
+
+        return value
+    }
+
     public fun getSideColour(square: Int, frontFace: Int, bottomFace: Int): Char{
 
         when(square){
@@ -194,6 +281,7 @@ public open class Cube {
         }
         return -1
     }
+
 
     private fun rotateFace(prime: Boolean, face: Int): Unit{ //rotates face, prime rotates counterclockwise if true (if face facing front)
         var temp: Char = cubeFace[face][0]

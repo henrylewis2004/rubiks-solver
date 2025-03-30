@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
             charArrayOf('o','o','o','r','o','o','o','o','o'),
             charArrayOf('y','y','y','y','y','y','y','y','y'),
         )
-        val al: Array<String> = solverAgent.getAlgorithm(finalSolveCube2)
+        val al: Array<String> = solverAgent.getAlgorithm(finalSolveCube)
         var s = ""
         for (a in al){
             s +=(a +", ")
