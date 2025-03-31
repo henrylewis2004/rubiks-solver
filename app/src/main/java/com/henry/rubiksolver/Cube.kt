@@ -126,12 +126,11 @@ public open class Cube {
 
     public fun getCornerSideColours(face: Int,bottomFace: Int, square: Int): CharArray{
         var values: CharArray = CharArray(2)
-        val rotSquare: Int = rotationOrder[getRotation(face,bottomFace)][square]
 
 
-        val sideFace: Int = getSideFace(rotSquare == 2 || rotSquare == 8, face, bottomFace)
+        val sideFace: Int = getSideFace(square == 2 || square == 8, face, bottomFace)
 
-        when (rotSquare){
+        when (square){
             0 -> {
                 values[0] = cubeFace[sideFace][rotationOrder[getRotation(sideFace,bottomFace)][2]]
                 values[1] = cubeFace[getOppositeFace(bottomFace)][rotationOrder[getRotation(getOppositeFace(bottomFace),face)][6]]
@@ -189,20 +188,16 @@ public open class Cube {
         val cornerPos: IntArray = intArrayOf(3,1,5,7)
         var bottomFace: Int
 
-        for (face in 0..cubeFace.size){
+        for (face in 1..4){
             when(face){
                 faces.WHITE.ordinal -> bottomFace = faces.GREEN.ordinal
                 faces.YELLOW.ordinal -> bottomFace = faces.GREEN.ordinal
                 else -> bottomFace = faces.WHITE.ordinal
             }
             for (squareId in cornerPos){
-                if (cubeFace[face][squareId] == colours[0] || cubeFace[face][squareId] == colours[1])  {
-                    if (getSideColour(squareId,face,bottomFace) == colours[0] || getSideColour(squareId,face,bottomFace) == colours[1]){
+                if ((getSquare(face,bottomFace,squareId) == colours[0] && getSideColour(squareId,face,bottomFace) == colours[1])|| getSquare(face,bottomFace,squareId) == colours[1] && getSideColour(squareId,face,bottomFace) == colours[0])  {
                         return intArrayOf(face,squareId)
-
-                    }
                 }
-
             }
         }
 
@@ -215,8 +210,8 @@ public open class Cube {
 
         when(square){
             1 -> return cubeFace[getOppositeFace(bottomFace)][rotationOrder[getRotation(getOppositeFace(bottomFace),frontFace)][7]]
-            3 -> return cubeFace[getSideFace(false,frontFace,bottomFace)][5]
-            5 -> return cubeFace[getSideFace(true,frontFace,bottomFace)][3]
+            3 -> return cubeFace[getSideFace(false,frontFace,bottomFace)][rotationOrder[getRotation(bottomFace, getOppositeFace(frontFace))][5]]
+            5 -> return cubeFace[getSideFace(true,frontFace,bottomFace)][rotationOrder[getRotation(bottomFace, getOppositeFace(frontFace))][3]]
             7 -> return cubeFace[bottomFace][rotationOrder[getRotation(bottomFace, getOppositeFace(frontFace))][1]]
 
         }

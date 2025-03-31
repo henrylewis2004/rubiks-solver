@@ -76,7 +76,7 @@ public class SolverUtil {
 
     public fun cornerCorrect(cube: Cube, face:Int, bottomFace: Int, corner:Int): Boolean{
         if (cube.getSquare(face,bottomFace,corner) == getColour(face) && cube.getSquare(face,bottomFace,corner-3) == getColour(face)){
-            val sideFace:Int = cube.getSideFace(corner == 8, face, bottomFace)
+            val sideFace:Int = cube.getSideFace(corner == 8 || corner == 2, face, bottomFace)
 
             if (cube.getSquare(sideFace,bottomFace,8 - 2 * utilFun.booleanToInt(corner == 8)) == getColour(sideFace) && cube.getSquare(sideFace,bottomFace,8 - 2 * utilFun.booleanToInt(corner == 8) - 3) == getColour(sideFace)){
                 return (cube.getSquare(bottomFace,cube.getOppositeFace(face),0 + 2 * utilFun.booleanToInt(corner == 8)) == getColour(bottomFace))
@@ -88,24 +88,45 @@ public class SolverUtil {
         return false
     }
 
+    public fun cornerSquareCorrect(cube:Cube, face: Int,bottomFace: Int, square: Int): Boolean{
+        val sideCol: CharArray = cube.getCornerSideColours(face,bottomFace,square)
+        if(cube.getSquare(face,bottomFace,square) != getColour(face)){ return false}
+        if(sideCol[0] != getColour(cube.getSideFace(square == 2 || square == 8,face,bottomFace))) {return false}
+        return (sideCol[1] == getColour(bottomFace))
+    }
+
+
+
+    public fun distanceInt(side1: Int, side2:Int): Int{
+        val distance = side1 - side2
+        val faces: IntArray = intArrayOf(1,2,3,4,5)
+        when{
+            abs(distance) == 2 -> return 2
+            distance == -3 || distance == 1 -> return -1
+            else -> return 1
+        }
+    }
+
 
 
     public fun sideCorrect(cube: Cube, square: Int, face: Int, bottomFace: Int): Boolean{
         return (cube.getSideColour(square,face,bottomFace) == cube.getSideFaceColour(square,face,bottomFace))
     }
 
-    public fun distance(face: Int, targetFace: Int): Int{
-        val distance: Int = face - targetFace
-        when {
-            abs(distance) == 2 -> return 2 //equidistance
-            distance == -1 || distance == 3 -> return 1 //1 to the right
-            else -> return 3 //3 to the right or 1 to the left
 
+    public fun cornerInCorrectPlace(cube: Cube,face:Int, bottomFace: Int, cornerPos:IntArray): Boolean{
+
+        if (cube.getSquare(face,bottomFace,cornerPos[0]) == getColour(face)){
+            val oppFace: Int = cube.getOppositeFace(bottomFace)
+            if (cube.getSquare(oppFace,face ,cornerPos[1]) == getColour(oppFace)){
+                val sideFace:Int = cube.getSideFace(cornerPos[0] == 0 || cornerPos[0] == 6, oppFace, face)
+                return (cube.getSquare(sideFace,face,cornerPos[2]) == getColour(sideFace))
+            }
         }
 
 
+        return false
     }
-
 
     public fun solvedCube(cubeFace: Array<CharArray>): Boolean{
         for (face in cubeFace){

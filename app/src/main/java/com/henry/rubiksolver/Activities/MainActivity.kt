@@ -19,7 +19,7 @@ import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    var debugMode: Boolean = false
     var cube: Cube = Cube()
     val solverAgent: Solver = Solver()
 
@@ -32,9 +32,8 @@ class MainActivity : AppCompatActivity() {
                     cube.setCubeFaces(returnData!!)
                     findViewById<TextView>(R.id.cubeText).text = getCubeString(cube)
                     solveCube()
-                }
-                catch(e: Error){
-                    Log.d("Errors",e.message.toString())
+                } catch (e: Error) {
+                    Log.d("Errors", e.message.toString())
                 }
             }
     }
@@ -84,6 +83,14 @@ class MainActivity : AppCompatActivity() {
             charArrayOf('w','y','y','w','o','w','b','b','b'),
             charArrayOf('r','w','b','r','y','g','y','y','o')
         )
+        val cubeFace2 = arrayOf(
+            charArrayOf('y','y','r','r','w','g','o','r','r'),
+            charArrayOf('r','g','b','g','b','y','b','o','y'),
+            charArrayOf('g','r','y','r','r','b','g','w','o'),
+            charArrayOf('b','b','w','o','g','b','o','g','g'),
+            charArrayOf('w','o','r','o','o','w','y','b','w'),
+            charArrayOf('o','y','b','y','y','w','w','w','g')
+        )
         val crashCube = arrayOf(
             charArrayOf('b','y','o','r','w','g','r','o','r'),
             charArrayOf('b','b','y','g','b','y','w','r','b'),
@@ -108,13 +115,8 @@ class MainActivity : AppCompatActivity() {
             charArrayOf('o','o','o','r','o','o','o','o','o'),
             charArrayOf('y','y','y','y','y','y','y','y','y'),
         )
-        val al: Array<String> = solverAgent.getAlgorithm(finalSolveCube)
-        var s = ""
-        for (a in al){
-            s +=(a +", ")
-        }
-        Log.d("algorithm", s)
-        findViewById<TextView>(R.id.cubeText).text = s
+        val al: Array<String> = solverAgent.getAlgorithm(cubeFace)
+        //findViewById<TextView>(R.id.cubeText).text = s
 
     }
 
