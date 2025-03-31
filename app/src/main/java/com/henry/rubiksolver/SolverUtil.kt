@@ -1,8 +1,5 @@
 package com.henry.rubiksolver
 
-import kotlin.math.abs
-
-
 
 public class SolverUtil {
     val utilFun: Util = Util()
@@ -97,35 +94,10 @@ public class SolverUtil {
 
 
 
-    public fun distanceInt(side1: Int, side2:Int): Int{
-        val distance = side1 - side2
-        val faces: IntArray = intArrayOf(1,2,3,4,5)
-        when{
-            abs(distance) == 2 -> return 2
-            distance == -3 || distance == 1 -> return -1
-            else -> return 1
-        }
-    }
-
 
 
     public fun sideCorrect(cube: Cube, square: Int, face: Int, bottomFace: Int): Boolean{
         return (cube.getSideColour(square,face,bottomFace) == cube.getSideFaceColour(square,face,bottomFace))
-    }
-
-
-    public fun cornerInCorrectPlace(cube: Cube,face:Int, bottomFace: Int, cornerPos:IntArray): Boolean{
-
-        if (cube.getSquare(face,bottomFace,cornerPos[0]) == getColour(face)){
-            val oppFace: Int = cube.getOppositeFace(bottomFace)
-            if (cube.getSquare(oppFace,face ,cornerPos[1]) == getColour(oppFace)){
-                val sideFace:Int = cube.getSideFace(cornerPos[0] == 0 || cornerPos[0] == 6, oppFace, face)
-                return (cube.getSquare(sideFace,face,cornerPos[2]) == getColour(sideFace))
-            }
-        }
-
-
-        return false
     }
 
     public fun solvedCube(cubeFace: Array<CharArray>): Boolean{
@@ -174,27 +146,4 @@ public class SolverUtil {
         return (action)
     }
 
-    public fun rotateYLayer(frontFace:Int, col:Int): Array<String>{
-        val value:Int = abs(frontFace - col)
-        when{
-            value == 2-> return arrayOf("u","u")
-            frontFace == faces.ORANGE.ordinal ->{
-                var a = arrayOf("u")
-                if(frontFace - col == 3){ a += "'"}
-                return a
-            }
-            frontFace == faces.BLUE.ordinal ->{
-                var a = arrayOf("u")
-                if(frontFace - col == -1){ a += "'"}
-                return a
-            }
-            else -> {
-                var a = arrayOf("u")
-                if (frontFace - col < 0) { a += "'"}
-                return a
-            }
-
-        }
-        return arrayOf()
-    }
 }

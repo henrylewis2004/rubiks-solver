@@ -2,9 +2,11 @@ package com.henry.rubiksolver.Activities
 
 import android.app.Activity
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -19,9 +21,12 @@ import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
-    var debugMode: Boolean = false
     var cube: Cube = Cube()
     val solverAgent: Solver = Solver()
+    lateinit var algorithmText: TextView
+    var algorithm: Array<String> = arrayOf()
+    var moveCount: Int = 0
+
 
     val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result ->
@@ -29,9 +34,7 @@ class MainActivity : AppCompatActivity() {
                 val returnData = result.data?.getSerializableExtra("newCubeFace") as? Array<CharArray>
 
                 try {
-                    cube.setCubeFaces(returnData!!)
-                    findViewById<TextView>(R.id.cubeText).text = getCubeString(cube)
-                    solveCube()
+                    solveCube(returnData!!)
                 } catch (e: Error) {
                     Log.d("Errors", e.message.toString())
                 }
@@ -41,8 +44,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        solveCube()
 
+        val cubeFacex: Array<CharArray> = arrayOf(
+            charArrayOf('g','o','y','w','w','g','r','g','w'),
+            charArrayOf('w','g','y','b','b','w','y','y','o'),
+            charArrayOf('g','r','o','r','r','b','b','r','b'),
+            charArrayOf('b','y','r','o','g','y','w','g','o'),
+            charArrayOf('g','w','r','b','o','o','g','b','y'),
+            charArrayOf('b','o','o','y','y','r','w','w','r'),
+        )
+        val s = solverAgent.getAlgorithm(cubeFacex)
 
         findViewById<Button>(R.id.newCubeButton).setOnClickListener { //goto make new camera activity
             val newCubeIntent = Intent(this, NewCubeActivity::class.java)
@@ -54,7 +65,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(settingsIntent)
         }
 
+        algorithmText = findViewById(R.id.cubeText)
+        algorithmText.isVisible = false
 
+        findViewById<ImageButton>(R.id.playButton).isVisible = false
+        findViewById<ImageButton>(R.id.nextButton).isVisible = false
+        findViewById<ImageButton>(R.id.previousButton).isVisible = false
+
+        findViewById<ImageButton>(R.id.playButton).isClickable = false
+        findViewById<ImageButton>(R.id.nextButton).isClickable = false
+        findViewById<ImageButton>(R.id.previousButton).isClickable = false
 
 
     }
@@ -73,52 +93,38 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun solveCube(){
-        findViewById<ImageView>(R.id.playButton).isVisible = true
-        val cubeFace = arrayOf(
-            charArrayOf('g','o','w','b','w','b','o','w','r'),
-            charArrayOf('r','r','g','g','b','y','o','g','g'),
-            charArrayOf('o','o','y','r','r','g','g','r','b'),
-            charArrayOf('y','o','w','o','g','y','w','b','r'),
-            charArrayOf('w','y','y','w','o','w','b','b','b'),
-            charArrayOf('r','w','b','r','y','g','y','y','o')
-        )
-        val cubeFace2 = arrayOf(
-            charArrayOf('y','y','r','r','w','g','o','r','r'),
-            charArrayOf('r','g','b','g','b','y','b','o','y'),
-            charArrayOf('g','r','y','r','r','b','g','w','o'),
-            charArrayOf('b','b','w','o','g','b','o','g','g'),
-            charArrayOf('w','o','r','o','o','w','y','b','w'),
-            charArrayOf('o','y','b','y','y','w','w','w','g')
-        )
-        val crashCube = arrayOf(
-            charArrayOf('b','y','o','r','w','g','r','o','r'),
-            charArrayOf('b','b','y','g','b','y','w','r','b'),
-            charArrayOf('w','g','g','o','r','w','y','b','b'),
-            charArrayOf('g','y','g','g','g','w','o','o','y'),
-            charArrayOf('y','r','r','r','o','w','g','w','w'),
-            charArrayOf('o','y','r','o','y','b','o','b','w')
-        )
-        val finalSolveCube = arrayOf(
-            charArrayOf('w','w','w','w','w','w','w','w','w'),
-            charArrayOf('b','r','r','b','b','b','b','b','b'),
-            charArrayOf('r','r','g','r','r','o','r','r','g'),
-            charArrayOf('g','g','g','g','g','g','b','g','o'),
-            charArrayOf('o','o','o','b','o','o','r','o','o'),
-            charArrayOf('y','y','y','y','y','y','y','y','y'),
-        )
-        val finalSolveCube2 = arrayOf(
-            charArrayOf('w','w','w','w','w','w','w','w','w'),
-            charArrayOf('b','b','b','b','b','b','b','b','b'),
-            charArrayOf('r','r','r','r','r','g','r','r','r'),
-            charArrayOf('g','g','g','g','g','g','g','o','g'),
-            charArrayOf('o','o','o','r','o','o','o','o','o'),
-            charArrayOf('y','y','y','y','y','y','y','y','y'),
-        )
+    private fun solveCube(cubeFace: Array<CharArray>){
         val al: Array<String> = solverAgent.getAlgorithm(cubeFace)
-        //findViewById<TextView>(R.id.cubeText).text = s
+        algorithmText.text = algorithm[0]
+        moveCount = 1
+
+
+        algorithmInteraction()
 
     }
+
+    private fun algorithmInteraction(): Unit{
+        val ui: Array<ImageButton> = arrayOf(findViewById<ImageButton>(R.id.playButton),findViewById<ImageButton>(R.id.previousButton),findViewById<ImageButton>(R.id.nextButton) )
+
+        for (button in ui){
+            button.isVisible = true
+            button.isClickable = true
+        }
+
+        ui[1].setOnClickListener{
+            moveCount -=1
+            algorithmText.text = algorithm[moveCount]
+        }
+
+        ui[2].setOnClickListener{
+            algorithmText.text = algorithm[moveCount]
+            moveCount++
+        }
+
+
+
+    }
+
 
 
     override fun onStart() {

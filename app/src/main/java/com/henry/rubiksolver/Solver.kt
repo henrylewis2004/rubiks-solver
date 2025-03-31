@@ -4,7 +4,7 @@ import android.util.Log
 import kotlin.concurrent.fixedRateTimer
 import kotlin.math.abs
 
-public open class Solver constructor( ){
+public open class Solver {
     private val solverUtil: SolverUtil = SolverUtil()
     private var frontFace: Int = faces.WHITE.ordinal
     private var bottomFace: Int = faces.GREEN.ordinal
@@ -16,10 +16,15 @@ public open class Solver constructor( ){
         val solveCube: Cube = Cube()
         solveCube.setCubeFaces(cubeFaces)
 
+        Log.d("cubesolve","herex")
         algorithm += getWhiteFace(solveCube)
+        Log.d("cubesolve","here1")
         algorithm += getSecondLayer(solveCube)
+        Log.d("cubesolve","here2")
         algorithm += getYellowFace(solveCube)
-  //      algorithm += finalSolve(solveCube)
+        Log.d("cubesolve","here3")
+        algorithm += finalSolve(solveCube)
+        Log.d("cubesolve","here4")
 
         return algorithm
     }
@@ -33,80 +38,109 @@ public open class Solver constructor( ){
 
         while (!solverUtil.isCrossSolved(cube, faces.WHITE.ordinal, faces.GREEN.ordinal)) { //white cross
             bottomFace = faces.WHITE.ordinal
-            for (face in 1..4){
-                for (squareId in crossSquares){
-                    if (cube.getSquare(face,bottomFace,squareId) == 'w'){
+            for (face in 1..4) {
+                for (squareId in crossSquares) {
+                    if (cube.getSquare(face, bottomFace, squareId) == 'w') {
                         algorithm += "rot_To_${solverUtil.getColour(face)}"
                         //move onto white face
-                        when (squareId){
-                            3 ->{
-                                while(cube.getSquare(bottomFace, cube.getOppositeFace(face), squareId) == 'w'){
-                                    algorithm += solverUtil.move(cube,false,"d",face,bottomFace)
+                        when (squareId) {
+                            3 -> {
+                                while (cube.getSquare(bottomFace, cube.getOppositeFace(face), squareId) == 'w') {
+                                    algorithm += solverUtil.move(cube, false, "d", face, bottomFace)
                                 }
-                                algorithm += solverUtil.move(cube,false,"l",face,bottomFace)
+                                algorithm += solverUtil.move(cube, false, "l", face, bottomFace)
                             }
-                            5 -> {
-                                while(cube.getSquare(bottomFace, cube.getOppositeFace(face), squareId) == 'w'){
-                                    algorithm += solverUtil.move(cube,false,"d",face,bottomFace)
-                                }
-                                algorithm += solverUtil.move(cube,true,"r",face,bottomFace)
-                            }
-                            1 ->{
-                                algorithm += solverUtil.move(cube,true,"f",face,bottomFace)
-                                while(cube.getSquare(bottomFace, cube.getOppositeFace(face), 5) == 'w'){
-                                    algorithm += solverUtil.move(cube,false,"d",face,bottomFace)
-                                }
-                                algorithm += solverUtil.move(cube,true,"r",face,bottomFace)
-                            }
-                            7 ->{
-                                while(cube.getSquare(bottomFace, cube.getOppositeFace(face), 1) == 'w'){
-                                    algorithm += solverUtil.move(cube,false,"d",face,bottomFace)
-                                }
-                                algorithm += solverUtil.move(cube,true,"f",face,bottomFace)
 
-                                while(cube.getSquare(bottomFace, cube.getOppositeFace(face), 5) == 'w'){
-                                    algorithm += solverUtil.move(cube,false,"d",face,bottomFace)
+                            5 -> {
+                                while (cube.getSquare(bottomFace, cube.getOppositeFace(face), squareId) == 'w') {
+                                    algorithm += solverUtil.move(cube, false, "d", face, bottomFace)
                                 }
-                                algorithm += solverUtil.move(cube,true,"r",face,bottomFace)
+                                algorithm += solverUtil.move(cube, true, "r", face, bottomFace)
+                            }
+
+                            1 -> {
+                                if (cube.getSquare(bottomFace, cube.getOppositeFace(face), 1) == 'w') {
+                                    if (cube.getSquare(bottomFace, cube.getOppositeFace(face), 3) != 'w') {
+                                        algorithm += solverUtil.move(cube, true, "d", face, bottomFace) }
+
+                                    else {
+                                        while (cube.getSquare(bottomFace, cube.getOppositeFace(face), 1) == 'w') {
+                                            algorithm += solverUtil.move(cube, false, "d", face, bottomFace)
+                                        }
+                                    }
+
+                                }
+                                algorithm += solverUtil.move(cube, true, "f", face, bottomFace)
+                                while (cube.getSquare(bottomFace, cube.getOppositeFace(face), 5) == 'w') {
+                                    algorithm += solverUtil.move(cube, false, "d", face, bottomFace)
+                                }
+                                algorithm += solverUtil.move(cube, true, "r", face, bottomFace)
+                            }
+
+                            7 -> {
+                                while (cube.getSquare(bottomFace, cube.getOppositeFace(face), 1) == 'w') {
+
+                                    algorithm += solverUtil.move(cube, false, "d", face, bottomFace)
+                                }
+                                algorithm += solverUtil.move(cube, true, "f", face, bottomFace)
+
+                                while (cube.getSquare(bottomFace, cube.getOppositeFace(face), 5) == 'w') {
+                                    algorithm += solverUtil.move(cube, false, "d", face, bottomFace)
+                                }
+                                algorithm += solverUtil.move(cube, true, "r", face, bottomFace)
                             }
                         }
                     }
 
                 }
             }
-            for (squareId in crossSquares){
+
+
+            for (squareId in crossSquares) {
                 val face = faces.YELLOW.ordinal
                 val bFace = faces.GREEN.ordinal
-                if (cube.getSquare(face,bFace,squareId) == 'w'){
-                    when (squareId){
+                if (cube.getSquare(face, bFace, squareId) == 'w') {
+                    when (squareId) {
                         1 -> frontFace = cube.getOppositeFace(bFace)
                         7 -> frontFace = bFace
                         else -> frontFace = cube.getSideFace(squareId == 5, face, bFace)
                     }
                     algorithm += "rot_To_${solverUtil.getColour(frontFace)}"
 
-                    while(cube.getSquare(faces.WHITE.ordinal, cube.getOppositeFace(frontFace), squareId) == 'w'){
-                        algorithm += solverUtil.move(cube,false,"d",frontFace,faces.WHITE.ordinal)
+                    while (cube.getSideColour(squareId,frontFace,faces.WHITE.ordinal) == 'w') {
+                        algorithm += solverUtil.move(cube, false, "d", frontFace, faces.WHITE.ordinal)
                     }
-                    algorithm += solverUtil.move(cube,false,"f",frontFace,faces.WHITE.ordinal) + solverUtil.move(cube,false,"f",frontFace,faces.WHITE.ordinal)
+
+                    algorithm += solverUtil.move(cube, false, "f", frontFace, faces.WHITE.ordinal)
+                    algorithm += solverUtil.move(cube, false, "f", frontFace, faces.WHITE.ordinal)
 
                 }
             }
             //position white correctly
+            var squareCnt: Int = 0
+            for (square in crossSquares){
+                if (cube.getCubeFaceSquare(faces.WHITE.ordinal,square) == 'w'){
+                    squareCnt++
+                }
+            }
 
-            frontFace = faces.WHITE.ordinal
-            bottomFace = faces.GREEN.ordinal
-            algorithm += "rot_To_${solverUtil.getColour(frontFace)}"
+            if(squareCnt == 4){
+                frontFace = faces.WHITE.ordinal
+                bottomFace = faces.GREEN.ordinal
+                algorithm += "rot_To_${solverUtil.getColour(frontFace)}"
 
-            for (squareId in crossSquares.indices) {
+                for (squareId in crossSquares.indices) {
                 val square = crossSquares[squareId]
 
-                if (cube.getSquare(frontFace,bottomFace,square) == 'w') {
-                    val sideFaceColour: Char = cube.getSideFaceColour(square, faces.WHITE.ordinal, faces.GREEN.ordinal)
-                    val sideColour: Char = cube.getSideColour(square, faces.WHITE.ordinal, faces.GREEN.ordinal)
+                if (cube.getSquare(frontFace, bottomFace, square) == 'w') {
+                    val sideFaceColour: Char =
+                        cube.getSideFaceColour(square, faces.WHITE.ordinal, faces.GREEN.ordinal)
+                    val sideColour: Char =
+                        cube.getSideColour(square, faces.WHITE.ordinal, faces.GREEN.ordinal)
 
                     if (sideColour != sideFaceColour) {
-                        val whiteSqCnt = solverUtil.correctCrossCount(faces.WHITE.ordinal, bottomFace, cube)
+                        val whiteSqCnt =
+                            solverUtil.correctCrossCount(faces.WHITE.ordinal, bottomFace, cube)
 
                         if (whiteSqCnt == 0) { //no correct squares yet
                             var nextSquare: Int = squareId - 1
@@ -114,19 +148,44 @@ public open class Solver constructor( ){
                                 nextSquare = 3
                             }
 
-                            if (cube.getSideFaceColour(crossSquares[nextSquare], faces.WHITE.ordinal, bottomFace) == sideColour) {
-                                algorithm += solverUtil.move(cube, true, "f", faces.WHITE.ordinal, bottomFace)
-                            }
+                            if (cube.getSideFaceColour(
+                                    crossSquares[nextSquare],
+                                    faces.WHITE.ordinal,
+                                    bottomFace
+                                ) == sideColour
+                            ) {
+                                algorithm += solverUtil.move(
+                                    cube,
+                                    true,
+                                    "f",
+                                    faces.WHITE.ordinal,
+                                    bottomFace
+                                )
+                            } else {
+                                algorithm += solverUtil.move(
+                                    cube,
+                                    false,
+                                    "f",
+                                    faces.WHITE.ordinal,
+                                    bottomFace
+                                )
 
-                            else {
-                                algorithm += solverUtil.move(cube, false, "f", faces.WHITE.ordinal, bottomFace)
-
-                                if (sideColour != cube.getSideFaceColour(crossSquares[squareId + 1 - (4 * utilFul.booleanToInt(squareId == 3))], faces.WHITE.ordinal, bottomFace)) {
-                                    algorithm += solverUtil.move(cube,false, "f", faces.WHITE.ordinal, bottomFace)
+                                if (sideColour != cube.getSideFaceColour(
+                                        crossSquares[squareId + 1 - (4 * utilFul.booleanToInt(
+                                            squareId == 3
+                                        ))], faces.WHITE.ordinal, bottomFace
+                                    )
+                                ) {
+                                    algorithm += solverUtil.move(
+                                        cube,
+                                        false,
+                                        "f",
+                                        faces.WHITE.ordinal,
+                                        bottomFace
+                                    )
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             val targetSquare: Int = solverUtil.getWhiteTargetCrossSquare(sideColour)
                             var squarePlacement: Int = 0
                             var a: Array<String> = arrayOf()
@@ -154,15 +213,20 @@ public open class Solver constructor( ){
                             a += (a[0])
 
                             for (move in a) {
-                                algorithm += solverUtil.move(cube, move.length > 1, move[0].toString(), faces.WHITE.ordinal, bottomFace)
+                                algorithm += solverUtil.move(
+                                    cube,
+                                    move.length > 1,
+                                    move[0].toString(),
+                                    faces.WHITE.ordinal,
+                                    bottomFace
+                                )
                             }
                         }
                     }
                 }
 
             }
-
-            frontFace = faces.WHITE.ordinal
+            }
         }
         return algorithm
     }
@@ -232,7 +296,7 @@ public open class Solver constructor( ){
 
                         if (cube.getSquare(frontFace,bottomFace,2 - 2* utilFul.booleanToInt(newSquareLoc == 2)) == cube.getSquare(frontFace,bottomFace,1) && cube.getSquare(cube.getOppositeFace(bottomFace),frontFace,topSquare) == cube.getSquare(cube.getOppositeFace(bottomFace),frontFace,7)){
                             when(newSquareLoc){
-                                0 -> al = arrayOf("u'", "f'","u","f'")
+                                0 -> al = arrayOf("u'", "f'","u","f")
                                 2 -> al = arrayOf("u","f","u'","f'")
                             }
                         }
@@ -407,7 +471,7 @@ public open class Solver constructor( ){
 
                         if (cube.getSquare(frontFace,bottomFace,newCornerLoc) == cube.getSquare(frontFace,bottomFace,1) && cube.getSquare(cube.getOppositeFace(bottomFace),frontFace,topSquare) == cube.getSquare(cube.getOppositeFace(bottomFace),frontFace,7)){
                             when(newCornerLoc){
-                                2 -> al = arrayOf("u'", "f'","u","f'")
+                                2 -> al = arrayOf("u'", "f'","u","f")
                                 0 -> al = arrayOf("u","f","u'","f'")
                             }
                         }
@@ -421,7 +485,6 @@ public open class Solver constructor( ){
                         for (move in al){
                             algorithm += solverUtil.move(cube,move.length>1,move[0].toString(),frontFace,bottomFace)
                         }
-                        al = arrayOf()
 
                     }
 
@@ -430,8 +493,6 @@ public open class Solver constructor( ){
 
 
             }
-
-
 
             if (solverUtil.isFaceSolved(cube.getCubeFace(faces.WHITE.ordinal))) {
 
@@ -449,7 +510,7 @@ public open class Solver constructor( ){
                         var targetSquare: IntArray = cube.getCornerSide(cube.getCornerSideColours(faces.WHITE.ordinal,faces.GREEN.ordinal,squareId))
 
                         if (targetSquare[1]  != 1){
-                            frontFace = face
+                            frontFace = targetSquare[0]
                             algorithm += "rot_To_${solverUtil.getColour(frontFace)}"
 
                             var al: Array<String> = arrayOf()
@@ -489,22 +550,13 @@ public open class Solver constructor( ){
 
                         var al: Array<String> = arrayOf()
 
-                        when (topColour){
-                            cube.getSquare(frontFace,bottomFace,6) -> {
-                                al = arrayOf("f","u","f'","u'","l'","u'","l")
-                            }
-                            cube.getSquare(frontFace,bottomFace,8) -> {
-                                al = arrayOf("f'","u'","f","u","r","u","r'")
-                            }
+                        if(topColour == cube.getSquare(frontFace,bottomFace,6) && cube.getSquare(cube.getOppositeFace(frontFace),bottomFace,1) == cube.getSquare(cube.getSideFace(false,frontFace,bottomFace),bottomFace,8)){
+                            al = arrayOf("f","u","f'","u'","l'","u'","l")
                         }
-                        when (cube.getCubeFaceSquare(targetSquare[0],targetSquare[1])){
-                            cube.getSquare(cube.getSideFace(false,frontFace,bottomFace),bottomFace,6) -> {
-                                al = arrayOf("f","u","f'","u'","l'","u'","l")
-                            }
-                            cube.getSquare(cube.getSideFace(true,frontFace,bottomFace),bottomFace,8) -> {
-                                al = arrayOf("f'","u'","f","u","r","u","r'")
-                            }
+                        else{
+                            al = arrayOf("f'","u'","f","u","r","u","r'")
                         }
+
 
                         for (move in al){
                             algorithm += solverUtil.move(cube,move.length>1,move[0].toString(),frontFace,bottomFace)
@@ -563,7 +615,8 @@ public open class Solver constructor( ){
                         algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace)
                     }
                     else if(cube.getSquare(faces.YELLOW.ordinal,frontFace,5) == 'y'){
-                        algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace) + solverUtil.move(cube,false,"u",frontFace,bottomFace)
+                        algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace)
+                        algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace)
                     }
                 }
 
@@ -596,12 +649,12 @@ public open class Solver constructor( ){
         var cornerUp:Int = 0
         var cornerCnt: Int = 0
         for (corner in cornerPiece){
-            if (cube.getSquare(frontFace,bottomFace,corner) == 'y'){
+            if (cube.getSquare(faces.YELLOW.ordinal,frontFace,corner) == 'y'){
                 cornerCnt ++
                 cornerUp = corner
             }
         }
-        if (cornerCnt > 1){
+        if (cornerCnt != 1){
             for (move in basicAl){
                 algorithm += solverUtil.move(cube,move.length>1,move[0].toString(),frontFace,bottomFace)
             }
@@ -620,12 +673,14 @@ public open class Solver constructor( ){
             }
             2 -> {
                if (cube.getSquare(cube.getOppositeFace(frontFace),bottomFace,2) == 'y'){
-                   algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace) + solverUtil.move(cube,false,"u",frontFace,bottomFace)
+                   algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace)
+                   algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace)
                }
             }
             6 -> {
                 if (cube.getSquare(frontFace,bottomFace,2) != 'y'){
-                    algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace) + solverUtil.move(cube,false,"u",frontFace,bottomFace)
+                    algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace)
+                    algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace)
                 }
             }
             else -> {
@@ -641,131 +696,99 @@ public open class Solver constructor( ){
 
         val al: Array<String>
         if (cube.getSquare(frontFace,bottomFace,2) == 'y'){
-            al = arrayOf("r","u","u","r'","u'","r","u","r'")
+            al = basicAl
         }
         else{
-            al = basicAl
+            al = arrayOf("r","u","u","r'","u'","r","u'","r'")
         }
 
         for (move in al){
             algorithm += solverUtil.move(cube,move.length>1,move[0].toString(),frontFace,bottomFace)
         }
-        return algorithm
 
+        return algorithm
     }
 
     private fun finalSolve(cube: Cube): Array<String>{
-        if (solverUtil.solvedCube(cube.getCube())){ return arrayOf() }
-        val leftSolve: Array<String> = arrayOf("l'","u","r","u'","l","u","u", "r'", "u", "r","u","u,","r'")
-
+        val leftSolve: Array<String> = arrayOf("l'","u","r","u'","l","u","u", "r'", "u", "r","u","u","r'")
         var algorithm: Array<String> = arrayOf()
+        if (solverUtil.solvedCube(cube.getCube())){ return algorithm }
+
         if (bottomFace != faces.WHITE.ordinal){
             frontFace = faces.BLUE.ordinal
             algorithm += "rot_To_${solverUtil.getColour(frontFace)}"
         }
         bottomFace = faces.WHITE.ordinal
-        var solvedFace: Int = 0
 
+        var solvedFaces: IntArray = intArrayOf()
         for (face in 1..4){
             if (cube.getSquare(face,bottomFace,0) == cube.getSquare(face,bottomFace,2)){
-
+                solvedFaces += face
             }
 
         }
 
-        for (face in 1..4) {
-            if (cube.getSquare(face, faces.WHITE.ordinal, 0) == cube.getSquare(face, faces.WHITE.ordinal, 2)) {
-                if (cube.getSquare(cube.getOppositeFace(face), faces.WHITE.ordinal, 0) != cube.getSquare(cube.getOppositeFace(face), faces.WHITE.ordinal, 2)) {
-                    when (face) {
-                        frontFace -> algorithm += solverUtil.move(cube, false, "u", frontFace, faces.WHITE.ordinal)
-                        cube.getOppositeFace(frontFace) -> algorithm += solverUtil.move(cube, true, "u", frontFace, faces.WHITE.ordinal)
-                        cube.getSideFace(true, frontFace, faces.WHITE.ordinal) -> algorithm += solverUtil.move(cube, false, "u", frontFace, faces.WHITE.ordinal) + solverUtil.move(cube, false, "u", frontFace, faces.WHITE.ordinal)
-                    }
+        when(solvedFaces.size){
+            0 -> {
+                for (move in leftSolve){
+                    algorithm += solverUtil.move(cube,move.length>1,move[0].toString(),frontFace,bottomFace)
                 }
-                else {
-                    for (targetFace in 1..4) {
-                        if (cube.getSquare(targetFace, faces.WHITE.ordinal, 1) == cube.getSquare(targetFace, faces.WHITE.ordinal, 0)) {
-                            var al: Array<String> = arrayOf()
-                            when (targetFace) {
 
-                                frontFace -> algorithm += solverUtil.move(cube, false, "u", frontFace, faces.WHITE.ordinal) + solverUtil.move(cube, false, "u", frontFace, faces.WHITE.ordinal)
-                                cube.getSideFace(true, frontFace, faces.WHITE.ordinal) -> algorithm += solverUtil.move(cube, true, "u", frontFace, faces.WHITE.ordinal)
-                                cube.getSideFace(false, frontFace, faces.WHITE.ordinal) -> algorithm += solverUtil.move(cube, false, "u", frontFace, faces.WHITE.ordinal)
-                                else -> { //on back
-                                    when (cube.getSquare(frontFace, faces.WHITE.ordinal, 1)) {
-                                        cube.getSquare(cube.getSideFace(true, frontFace, faces.WHITE.ordinal), faces.WHITE.ordinal, 0) -> {
-                                            al = arrayOf("f", "f", "u'", "r'", "l", "f", "f", "l'", "r", "u'", "f", "f")
+                return finalSolve(cube)
+            }
 
+            1 -> {
+                when(solvedFaces[0]){
+                    cube.getSideFace(false,frontFace,bottomFace)->{} //do nothing
 
-                                        }
+                    frontFace ->{
+                        algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace)
+                    }
 
-                                        cube.getSquare(cube.getSideFace(false, frontFace, faces.WHITE.ordinal), faces.WHITE.ordinal, 0) -> {
-                                            al = arrayOf("f", "f", "u", "r'", "l", "f", "f", "l'", "r", "u", "f", "f")
-                                        }
-                                    }
-                                }
+                    cube.getOppositeFace(frontFace)->{
+                        algorithm += solverUtil.move(cube,true,"u",frontFace,bottomFace)
+
+                    }
+
+                    else -> {
+                        algorithm += solverUtil.move(cube,true,"u",frontFace,bottomFace)
+                        algorithm += solverUtil.move(cube,true,"u",frontFace,bottomFace)
+                    }
+
+                }
+
+                for (move in leftSolve){
+                    algorithm += solverUtil.move(cube,move.length>1,move[0].toString(),frontFace,bottomFace)
+                }
+                return finalSolve(cube)
+            }
+            else -> {
+                val al: Array<String>
+
+                for (face in 1..4){
+                    if (cube.getSquare(face,bottomFace,1) == cube.getSquare(face,bottomFace,0)){
+                        when(face){
+                            frontFace -> {
+                                algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace)
+                                algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace)
                             }
-                            for (move in al) {
-                                algorithm += solverUtil.move(cube, move.length > 2, move[0].toString(), frontFace, faces.WHITE.ordinal)
+                            cube.getSideFace(false,frontFace,bottomFace) -> {
+                                algorithm += solverUtil.move(cube,false,"u",frontFace,bottomFace)
                             }
-                            if (solverUtil.solvedCube(cube.getCube())){return algorithm}
-                            break
+                            cube.getSideFace(true,frontFace,bottomFace) -> {
+                                algorithm += solverUtil.move(cube,true,"u",frontFace,bottomFace)
+                            }
                         }
                     }
-
-
                 }
-                val al: Array<String> = arrayOf("l'", "u", "r", "u'", "l", "u", "u", "r'", "u", "r", "u", "u", "r")
-
-                for (move in al) {
-                    algorithm += solverUtil.move(cube, move.length > 1, move[0].toString(), frontFace, faces.WHITE.ordinal)
-                }
-                break
-            }
-        }
-
-        if (solverUtil.solvedCube(cube.getCube())){ return algorithm }
-
-        Log.d("finalSolve", "h2ere")
-        for (face in 1.. 4){
-            if (cube.getCubeFaceSquare(face, 1) == cube.getCubeFaceSquare(cube.getOppositeFace(face), 1)){
-                Log.d("finalSolve", "h3ere")
-                val al: Array<String> = arrayOf("r","r","l","l","u","r","r","l","l","u","u","r","r","l","l","u","r","r","l","l")
+                al = arrayOf("f","f","u'","r'","l","f","f","l'","r","u'","f","f")
 
                 for (move in al){
-                    if (move.length > 1){algorithm += solverUtil.move(cube,true,move,frontFace,faces.WHITE.ordinal) }
-                    else{algorithm += solverUtil.move(cube,false,move,frontFace,faces.WHITE.ordinal) }
+                    algorithm += solverUtil.move(cube,move.length>1,move[0].toString(),frontFace,bottomFace)
                 }
-
-                return algorithm
-
-            }
-
-            if (cube.getSquare(face,0,1) == cube.getSquare(face,0,0)){
-                Log.d("finalSolve", "here4")
-                when(face){
-                    frontFace -> algorithm += solverUtil.move(cube,false,"u",face,faces.WHITE.ordinal) + solverUtil.move(cube,false,"u",face,faces.WHITE.ordinal)
-                    cube.getSideFace(true,frontFace,faces.WHITE.ordinal) -> algorithm += solverUtil.move(cube,true,"u",face,faces.WHITE.ordinal)
-                    cube.getOppositeFace(frontFace) -> break
-                    else -> algorithm += solverUtil.move(cube,false,"u",face,faces.WHITE.ordinal)
-                }
-                break
+                return finalSolve(cube)
             }
         }
-
-        Log.d("finalSolve", "here6")
-        var al: Array<String> = arrayOf("")
-        when(cube.getSquare(frontFace,faces.WHITE.ordinal,0)){
-            solverUtil.getColour(cube.getSideFace(true,frontFace,0)) -> al = arrayOf("f","f","u'", "r'","l","f","f","l'","r","u'","f","f")
-            else -> al = arrayOf("f","f","u", "r'","l","f","f","r","l'","u","f","f")
-        }
-
-        for (move in al) {
-            algorithm += solverUtil.move(cube, move.length > 1, move[0].toString(), frontFace, 0)
-        }
-
-        Log.d("finalSolve", "here7")
-        return algorithm
     }
 
 

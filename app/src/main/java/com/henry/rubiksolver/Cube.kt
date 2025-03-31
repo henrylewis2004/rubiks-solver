@@ -195,7 +195,9 @@ public open class Cube {
                 else -> bottomFace = faces.WHITE.ordinal
             }
             for (squareId in cornerPos){
-                if ((getSquare(face,bottomFace,squareId) == colours[0] && getSideColour(squareId,face,bottomFace) == colours[1])|| getSquare(face,bottomFace,squareId) == colours[1] && getSideColour(squareId,face,bottomFace) == colours[0])  {
+                val test = getSquare(face,bottomFace,squareId)
+                val test2 = getSideColour(squareId,face,bottomFace)
+                if ((getSquare(face,bottomFace,squareId) == colours[0] && getSideColour(squareId,face,bottomFace) == colours[1]) || (getSquare(face,bottomFace,squareId) == colours[1] && getSideColour(squareId,face,bottomFace) == colours[0]))  {
                         return intArrayOf(face,squareId)
                 }
             }
@@ -210,8 +212,8 @@ public open class Cube {
 
         when(square){
             1 -> return cubeFace[getOppositeFace(bottomFace)][rotationOrder[getRotation(getOppositeFace(bottomFace),frontFace)][7]]
-            3 -> return cubeFace[getSideFace(false,frontFace,bottomFace)][rotationOrder[getRotation(bottomFace, getOppositeFace(frontFace))][5]]
-            5 -> return cubeFace[getSideFace(true,frontFace,bottomFace)][rotationOrder[getRotation(bottomFace, getOppositeFace(frontFace))][3]]
+            3 -> return cubeFace[getSideFace(false,frontFace,bottomFace)][rotationOrder[getRotation(getSideFace(false,frontFace,bottomFace), bottomFace)][5]]
+            5 -> return cubeFace[getSideFace(true,frontFace,bottomFace)][rotationOrder[getRotation(getSideFace(true,frontFace,bottomFace), bottomFace)][3]]
             7 -> return cubeFace[bottomFace][rotationOrder[getRotation(bottomFace, getOppositeFace(frontFace))][1]]
 
         }
