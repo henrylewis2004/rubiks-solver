@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     var cube: Cube = Cube()
     val solverAgent: Solver = Solver()
     lateinit var algorithmText: TextView
-    var algorithm: Array<String> = arrayOf()
+    lateinit var algorithm: Array<String>
     var moveCount: Int = 0
 
 
@@ -34,7 +34,9 @@ class MainActivity : AppCompatActivity() {
                 val returnData = result.data?.getSerializableExtra("newCubeFace") as? Array<CharArray>
 
                 try {
+                    Log.d("cubesolve", "mainHere")
                     solveCube(returnData!!)
+                    Log.d("cubesolve", "mainHere2")
                 } catch (e: Error) {
                     Log.d("Errors", e.message.toString())
                 }
@@ -45,15 +47,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val cubeFacex: Array<CharArray> = arrayOf(
-            charArrayOf('g','o','y','w','w','g','r','g','w'),
-            charArrayOf('w','g','y','b','b','w','y','y','o'),
-            charArrayOf('g','r','o','r','r','b','b','r','b'),
-            charArrayOf('b','y','r','o','g','y','w','g','o'),
-            charArrayOf('g','w','r','b','o','o','g','b','y'),
-            charArrayOf('b','o','o','y','y','r','w','w','r'),
-        )
-        val s = solverAgent.getAlgorithm(cubeFacex)
+
 
         findViewById<Button>(R.id.newCubeButton).setOnClickListener { //goto make new camera activity
             val newCubeIntent = Intent(this, NewCubeActivity::class.java)
@@ -66,7 +60,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         algorithmText = findViewById(R.id.cubeText)
-        algorithmText.isVisible = false
 
         findViewById<ImageButton>(R.id.playButton).isVisible = false
         findViewById<ImageButton>(R.id.nextButton).isVisible = false
@@ -94,11 +87,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun solveCube(cubeFace: Array<CharArray>){
-        val al: Array<String> = solverAgent.getAlgorithm(cubeFace)
-        algorithmText.text = algorithm[0]
-        moveCount = 1
-
-
+        algorithm = solverAgent.getAlgorithm(cubeFace)
         algorithmInteraction()
 
     }
@@ -117,7 +106,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         ui[2].setOnClickListener{
-            algorithmText.text = algorithm[moveCount]
             moveCount++
         }
 

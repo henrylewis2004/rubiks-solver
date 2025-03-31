@@ -19,11 +19,12 @@
 
     <TextView
         android:id="@+id/cubeText"
-        android:layout_width="89dp"
-        android:layout_height="56dp"
-        android:text="R"
+        android:layout_width="358dp"
+        android:layout_height="97dp"
+        android:text="Enter A Cube To Solve!"
         android:textAlignment="center"
         android:textSize="40sp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
