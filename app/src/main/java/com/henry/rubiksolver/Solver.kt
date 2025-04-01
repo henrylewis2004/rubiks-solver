@@ -18,15 +18,10 @@ public open class Solver {
         val solveCube: Cube = Cube()
         solveCube.setCubeFaces(cubeFaces)
 
-        Log.d("cubesolve","herex")
         algorithm += getWhiteFace(solveCube)
-        Log.d("cubesolve","here1")
         algorithm += getSecondLayer(solveCube)
-        Log.d("cubesolve","here2")
         algorithm += getYellowFace(solveCube)
-        Log.d("cubesolve","here3")
         algorithm += finalSolve(solveCube)
-        Log.d("cubesolve","here4")
 
 
         return algorithm
