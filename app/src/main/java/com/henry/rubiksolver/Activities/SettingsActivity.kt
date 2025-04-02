@@ -5,10 +5,12 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.Switch
 import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.henry.rubiksolver.R
@@ -22,6 +24,21 @@ class SettingsActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.settingsBackButton).setOnClickListener{ //back button
                finish() //close activity
+        }
+
+
+        val darkModeButton: Switch = findViewById<Switch>(R.id.darkModeButton)
+
+
+        darkModeButton.setOnCheckedChangeListener{_, isChecked->
+            if (darkModeButton.isChecked){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                darkModeButton.text = "Disable dark mode"
+            }
+            else{
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                darkModeButton.text = "Enable dark mode"
+            }
         }
 
         val permissionButton: ToggleButton = findViewById<ToggleButton>(R.id.permissionsButton)

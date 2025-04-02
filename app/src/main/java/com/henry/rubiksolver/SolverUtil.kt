@@ -93,7 +93,15 @@ public class SolverUtil {
     }
 
 
-
+    public fun whiteCross(face: CharArray): Boolean{
+        val loc: IntArray = intArrayOf(1,3,5,7)
+        for (squareId in loc){
+            if (face[squareId] != 'w'){
+                return false
+            }
+        }
+        return true
+    }
 
 
     public fun sideCorrect(cube: Cube, square: Int, face: Int, bottomFace: Int): Boolean{

@@ -8,9 +8,18 @@ public class Algorithm {
 
 
     public fun setAlgorithm(newAl: Array<String>):Unit{
+        alFinished = true
+
+        if (algorithm.size == 0){
+            alFinished = false
+        }
+
         algorithm = newAl
     }
 
+    public fun clearAlgorithm(): Unit{
+        algorithm = arrayOf()
+    }
 
     public fun getAbsoluteMove(move:Int): String{
         return algorithm[move]
@@ -35,9 +44,9 @@ public class Algorithm {
 
 
     public fun getNextMove(): String{
-        if (moveCnt == algorithm.size - 1){
+        if (moveCnt == algorithm.size-1){
             alFinished = true
-            return getMove(moveCnt)
+            return getMove(moveCnt-1)
         }
 
         moveCnt++
