@@ -603,6 +603,10 @@ public open class Solver {
                     }
                 }
 
+                else if (cube.getSquare(faces.YELLOW.ordinal,frontFace,5) == 'y'){
+                    algorithm += solverUtil.move(cube,true,"u",frontFace,bottomFace)
+                }
+
                 val al: Array<String> = arrayOf("f","r","u","r'","u'","f'")
 
                 for (move in al){
