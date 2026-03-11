@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/henrylewis2004/rubiks-solver/blob/main/rubik-cube-3d-icon-png-download-12614333.png" alt="Code-Geass-SRPG" width="128" height="128" />
+  <img src=".github/images/rubik-cube-3d-icon-png-download-12614333.png" alt="Code-Geass-SRPG" width="128" height="128" />
 </p>
 
 
