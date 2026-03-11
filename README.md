@@ -22,7 +22,7 @@ This project was for my final year Computer Science dissertation at the Universi
 
 ### Algorithm Used
 
-No specific algorithm was used (simply peak into []() to see the consequences of that decision). I had decided against using third party libraries and as such I had to develop the algorithm myself. To this end I would randomise the cube and then 
+No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/com/henry/rubiksolver/Solver.kt) to see the consequences of that decision). I had decided against using third party libraries and as such I had to develop the algorithm myself. To this end I would randomise the cube and then solve the Cube describing the rational behind each decision. It is fair to say that the algorithm therefore uses a mixed group of agorithms (largely using [CFOP](https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/) with some more complex additional moves)
 
 [See the dissertation paper]()
 
