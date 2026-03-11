@@ -82,3 +82,5 @@ No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/c
 ## Further Work
 
 ## License
+
+MIT License — see [LICENSE](LICENSE.md) for details.
