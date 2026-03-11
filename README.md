@@ -10,7 +10,7 @@
   <a href="#about">About</a> •
   <a href="#images">Images</a> •
   <a href="#details">Details</a> •
-  <a href="#further-work">Further Work</a>
+  <a href="#further-work-and-contributions">Further Work & Contributions</a>
 </p>
 
 
@@ -77,9 +77,24 @@ No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/c
 
 ### Algorithm
 
-[See the dissertation paper](.github/dissertation_paper_git.pdf) for more information.
+See the [dissertation paper](.github/dissertation_paper_git.pdf) for more information.
 
-## Further Work
+## Further Work and Contributions
+
+### Contributions
+
+Feel free to use the work here
+
+### Further Work
+
+The project would best be improved with:
+
+1. Visualisations of the solving moves (e.g. a 3D animation showing the cube perform an R move, etc.)
+2. Implementation of a standard solving algorithm 
+3. Real human voices (as opposed to AI)
+
+Additionally I had originally intended to include the ability to solve differently sized cubes too (2x2, 4x4, 5x5), a feature which the app would be improved with. 
+The 2x2 might pose some difficulty but the 4x4 and 5x5 are essentially quirky 3x3s just adding a couple steps (3x3 setup and final step correction) to a normal 3x3.
 
 ## License
 
