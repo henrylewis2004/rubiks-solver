@@ -83,7 +83,7 @@ See the [dissertation paper](.github/dissertation_paper_git.pdf) for more inform
 
 ### Contributions
 
-Feel free to use the work here
+Feel free to use the work here as you wish, there is no need to reference the code.
 
 ### Further Work
 
@@ -93,8 +93,8 @@ The project would best be improved with:
 2. Implementation of a standard solving algorithm 
 3. Real human voices (as opposed to AI)
 
-Additionally I had originally intended to include the ability to solve differently sized cubes too (2x2, 4x4, 5x5), a feature which the app would be improved with. 
-The 2x2 might pose some difficulty but the 4x4 and 5x5 are essentially quirky 3x3s just adding a couple steps (3x3 setup and final step correction) to a normal 3x3.
+> Additionally I had originally intended to include the ability to solve differently sized cubes too (2x2, 4x4, 5x5), a feature which the app would be improved with. 
+> The 2x2 might pose some difficulty but the 4x4 and 5x5 are essentially quirky 3x3s that would just add a couple steps (3x3 setup and final step correction) to a normal 3x3.
 
 ## License
 
