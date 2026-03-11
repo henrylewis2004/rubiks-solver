@@ -48,7 +48,7 @@ No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/c
   <img src=".github/images/cube_map_page.png" alt="Finished Input" width="256"  />
 </p>
 
-> Note: Colours can be manualy specified on the [Manual Input Page](.github/images/cube_input_page.png) by pressing each square, cycling through the colours or automatically identified using the [camera](.github/images/cube_cam_page.png).
+> Note: Colours can be manually specified on the [Manual Input Page](.github/images/cube_input_page.png) by pressing each square, cycling through the colours or automatically identified using the [camera](.github/images/cube_cam_page.png).
 
 ### Cube Solving
 
@@ -73,9 +73,17 @@ No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/c
 
 ### Cube datastructure
 
+
+
 ### Colour Picker
 
+After taking an image of the user's cube's face, the program takes a pixel's RBG value from each square and converts it to [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV). It then uses the saturation value to determine if the square is white and if not then the colour value to accurately determine the square's colour.
+
+> Note: if a colour is incorrectly determined then a user is able to either scan again or manually assign a square's colour.
+
 ### Algorithm
+
+As described in the [About](#about) section, the project uses CFOP taking a mixture of a beginner method moves with various additional moves that I've picked up along the way.
 
 See the [dissertation paper](.github/dissertation_paper_git.pdf) for more information.
 
