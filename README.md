@@ -16,7 +16,7 @@
 
 ## About
 
-rubiks-solver is an application written for Android in Kotlin using Android Studio that gives voiced commands to solve a Rubiks Cube after analysing 6 images showing each side of the cube.
+rubiks-solver is an application written for Android in Kotlin using Android Studio that gives voiced commands to solve a Rubiks Cube after analysing the 6 images showing each side of the cube.
 
 This project was for my final year Computer Science dissertation at the University of Liverpool (2025), recieving a 85% mark. I had never used Kotlin or Android Studio prior to this project and it helped me to learn a lot.
 
