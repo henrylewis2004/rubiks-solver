@@ -28,18 +28,46 @@ No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/c
 [Click to see the dissertation paper](.github/dissertation_paper.pdf) for deaper information and rational about the project.
 
 > Note:
-> I did forget to write the acknowledgements page due to last minute submission
+> I did forget to finish the acknowledgements page
 
 ## Images
+
+### App Home Page
+
 <p align="center">
-  <img src=".github/images/cube_home_page.png" alt="Code-Geass-SRPG" width="111" height="128" />
+  <img src=".github/images/cube_home_page.png" alt="home page" width="256"  />
 </p>
-![alt text](.github/images/cube_home_page.png "Logo Title Text 1")
+
+> Note: Press "New Cube" to enter a new cube (see [App Cube Input](#app-cube-input)) or press the settings wrench button at the bottom right to enter settings (see [Settings Page](#settings-page)).
+
+### App Cube Input
+
+<p align="center">
+  <img src=".github/images/cube_input_page.png" alt="Manual Input Page" width="256" />
+  <img src=".github/images/cube_cam_page.png" alt="Camera Input Page" width="256"  />
+  <img src=".github/images/cube_map_page.png" alt="Finished Input" width="256"  />
+</p>
+
+> Note: Colours can be manualy specified on the [Manual Input Page](.github/images/cube_input_page.png) by pressing each square, cycling through the colours or automatically identified using the [camera](.github/images/cube_cam_page.png).
+
+### Cube Solving
+
+<p align="center">
+  <img src=".github/images/cube_solve_page1.png" alt="Cube Mid-Solve" width="256" />
+  <img src=".github/images/cube_solved_page.png" alt="Cube Solved Page" width="256"  />
+</p>
 
 
-![alt text](.github/images/cube_input_page.png "Logo Title Text 1")
-![alt text](.github/images/cube_cam_page.png "Logo Title Text 1")
-![alt text](.github/images/cube_map_page.png "Logo Title Text 1")
+> Note: Images shown are gifs which play alongside input & text is vocalised using an ai synthesised voice.
+
+### Settings Page
+
+<p align="center">
+  <img src="cube_settings_page.png" alt="Settings Page" width="256" />
+</p>
+
+
+> Note: Settings show dark/light mode options and revoking/granting camera permissions.
 
 
 ## Details
