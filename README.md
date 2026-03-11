@@ -63,7 +63,7 @@ No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/c
 ### Settings Page
 
 <p align="center">
-  <img src="cube_settings_page.png" alt="Settings Page" width="256" />
+  <img src=".github/images/cube_settings_page.png" alt="Settings Page" width="256" />
 </p>
 
 
