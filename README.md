@@ -20,6 +20,12 @@ rubiks-solver is an application written for Android in Kotlin using Android Stud
 
 This project was for my final year Computer Science dissertation at the University of Liverpool (2025), recieving a 85% mark. I had never used Kotlin or Android Studio prior to this project and it helped me to learn a lot.
 
+### Algorithm Used
+
+No specific algorithm was used (simply peak into []() to see the consequences of that decision). I had decided against using third party libraries and as such I had to develop the algorithm myself. To this end I would randomise the cube and then 
+
+[See the dissertation paper]()
+
 ## Images
 
 ## Details
