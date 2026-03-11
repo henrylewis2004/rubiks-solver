@@ -73,7 +73,9 @@ No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/c
 
 ### Cube datastructure
 
+The cube is represented by a series of arrays each representing a face that combine to make a cube, with each face using an ENUM value for reliable and consistent use. Each square is then represented by a char value (e.g. 'r' for red or 'b' for blue).
 
+> See [Cube.kt](app/src/main/java/com/henry/rubiksolver/Cube.kt) for more information
 
 ### Colour Picker
 
@@ -84,6 +86,8 @@ After taking an image of the user's cube's face, the program takes a pixel's RBG
 ### Algorithm
 
 As described in the [About](#about) section, the project uses CFOP taking a mixture of a beginner method moves with various additional moves that I've picked up along the way.
+
+### Further Details
 
 See the [dissertation paper](.github/dissertation_paper_git.pdf) for more information.
 
