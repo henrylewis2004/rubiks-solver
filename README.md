@@ -69,8 +69,15 @@ No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/c
 
 > Note: Settings show dark/light mode options and revoking/granting camera permissions.
 
-
 ## Details
+
+### Cube datastructure
+
+### Colour Picker
+
+### Algorithm
+
+[See the dissertation paper](.github/dissertation_paper.pdf) for more information.
 
 ## Further Work
 
