@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/images/rubik-cube-3d-icon-png-download-12614333.png" alt="Code-Geass-SRPG" width="128" height="128" />
+  <img src=".github/images/52525-9-rubik's-cube-image-png-file-hd.png" alt="Code-Geass-SRPG" width="111" height="128" />
 </p>
 
 
