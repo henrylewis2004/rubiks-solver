@@ -27,9 +27,6 @@ No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/c
 ### Dissertation Paper
 [Click to see the dissertation paper](.github/dissertation_paper_git.pdf) for deeper information and rational about the project.
 
-> Note:
-> I did forget to finish the acknowledgements page
-
 ## Images
 
 ### App Home Page
