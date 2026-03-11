@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/images/52525-9-rubik's-cube-image-png-file-hd.png" alt="Code-Geass-SRPG" width="111" height="128" />
+  <img src=".github/images/52525-9-rubik's-cube-image-png-file-hd.png" alt="rubiks-solver" width="111" height="128" />
 </p>
 
 
@@ -31,6 +31,16 @@ No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/c
 > I did forget to write the acknowledgements page due to last minute submission
 
 ## Images
+<p align="center">
+  <img src=".github/images/cube_home_page.png" alt="Code-Geass-SRPG" width="111" height="128" />
+</p>
+![alt text](.github/images/cube_home_page.png "Logo Title Text 1")
+
+
+![alt text](.github/images/cube_input_page.png "Logo Title Text 1")
+![alt text](.github/images/cube_cam_page.png "Logo Title Text 1")
+![alt text](.github/images/cube_map_page.png "Logo Title Text 1")
+
 
 ## Details
 
