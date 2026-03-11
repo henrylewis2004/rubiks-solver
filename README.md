@@ -80,9 +80,14 @@ After taking an image of the user's cube's face, the program takes a pixel's RBG
 
 > Note: if a colour is incorrectly determined then a user is able to either scan again or manually assign a square's colour.
 
+> See (NewCubeCamActivity.kt)[app/src/main/java/com/henry/rubiksolver/Activities/NewCubeCamActivity.kt] for more information
+
+
 ### Algorithm
 
 As described in the [About](#about) section, the project uses CFOP taking a mixture of a beginner method moves with various additional moves that I've picked up along the way.
+
+> see (Solver.kt)[app/src/main/java/com/henry/rubiksolver/SolverUtil.kt] and [SolverUtil.kt](app/src/main/java/com/henry/rubiksolver/SolverUtil.kt) for more information
 
 ### Further Details
 
