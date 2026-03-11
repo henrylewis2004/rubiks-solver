@@ -4,7 +4,7 @@
 
 
 <h1 align="center">rubiks-solver</h1>
-<h3 align="center">An Android Rubiks-Cube Solver in Kotlin</h3>
+<h3 align="center">An Android Rubik's Cube Solver in Kotlin</h3>
 
 <p align="center">
   <a href="#about">About</a> •
