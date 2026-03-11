@@ -25,10 +25,10 @@ This project was for my final year Computer Science dissertation at the Universi
 No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/com/henry/rubiksolver/Solver.kt) to see the consequences of that decision). I had decided against using third party libraries and as such I had to develop the algorithm myself. To this end I would randomise the cube and then solve the Cube describing the rational behind each decision. It is fair to say that the algorithm therefore uses a mixed group of agorithms (largely using [CFOP](https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/) with some more complex additional moves). All that being said, whilst the algorithm is capable of solving the cube (I went through many bugfixes!!), it does not do so efficiently taking far more moves than alternate algorithms would, although potentially less than the beginners method.
 
 ### Dissertation Paper
-[Click to see the dissertation paper](.github/dissertation_paper.pdf)
+[Click to see the dissertation paper](.github/dissertation_paper.pdf) for deaper information and rational about the project.
 
 > Note
-> I did forget to write the acknowledgements page due to last minute submission :(
+> I did forget to write the acknowledgements page due to last minute submission
 
 ## Images
 
