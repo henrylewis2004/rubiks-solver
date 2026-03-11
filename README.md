@@ -68,7 +68,7 @@ No specific algorithm was used (simply peak into [Solver.kt](app/src/main/java/c
 
 ## Details
 
-### Cube datastructure
+### Cube Data Structure
 
 The cube is represented by a series of arrays each representing a face that combine to make a cube, with each face using an ENUM value for reliable and consistent use. Each square is then represented by a char value (e.g. 'r' for red or 'b' for blue).
 
