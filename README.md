@@ -1,4 +1,4 @@
-(Download)[https://github.com/henrylewis2004/rubiks-solver/releases/tag/1.0.0]
+[Download](https://github.com/henrylewis2004/rubiks-solver/releases/tag/1.0.0)
 
 
 <p align="center">
