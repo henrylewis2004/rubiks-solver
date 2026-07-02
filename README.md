@@ -1,3 +1,6 @@
+(Download)[https://github.com/henrylewis2004/rubiks-solver/releases/tag/1.0.0]
+
+
 <p align="center">
   <img src=".github/images/52525-9-rubik's-cube-image-png-file-hd.png" alt="rubiks-solver" width="111" height="128" />
 </p>
